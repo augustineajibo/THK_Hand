@@ -66,10 +66,11 @@ if __name__ == "__main__":
 
     # return the fingers to default postion
     #controller.send_command(b'\x00\x01\x00')
+    controller.send_command(b'\x00\x01\x00')
     #controller.send_command(b'\x00\x01\x0c')
-    controller.send_command(b'\x02\x01\x00')
-    controller.send_command(b'\x02\x01\x00')
-    0x40, 0x00, 0x00, 0x00
+    #controller.send_command(b'\x02\x01\x00')
+    #controller.send_command(b'\x02\x01\x00')
+    #0x40, 0x00, 0x00, 0x00
 
     #controller.send_command(b'\x04\x04\x01\x00\x00\x00')
 
