@@ -37,6 +37,7 @@ class MainForm(qtw.QWidget, Ui_MainForm):
         self.setupUi(self)
         #self.pb_connect.clicked.connect(self.clickMe)
         self.pb_connect.clicked.connect(self.Connect_2_Hand)
+        self.pb_reset.clicked.connect(self.reset)
 
 
     def Connect_2_Hand(self):
@@ -47,11 +48,28 @@ class MainForm(qtw.QWidget, Ui_MainForm):
         else:
             print("Invalid ip or port entered")
         hand = socketCom.THK_Hand_Controller()
-        hand.connect(host, port)
+        status=hand.connect(host, port)
 
-        print("Connected to THK hand at {} and port {}".format(host, port))
+        if status[0] == 1:
+            print("connected successfully")
+        else:
+            print("Unsuccessful connection")
 
-        #self.rb_status.setStyleSheet(self,"QRadioButton { color: blue:}")
+        hand.close()
+        return(host, port)
+
+    def reset(self):
+        host,port = self.Connect_2_Hand()
+        hand = socketCom.THK_Hand_Controller()
+        status = hand.connect(host, port)
+
+        if status[0] == 1:
+            hand.MoveOrigin()
+            hand.close()
+        else:
+            print("Check hand connection")
+
+        return
 
 
 

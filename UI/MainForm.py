@@ -911,34 +911,34 @@ class Ui_MainForm(object):
         self.frame_9.setFrameShadow(QFrame.Raised)
         self.horizontalLayout_8 = QHBoxLayout(self.frame_9)
         self.horizontalLayout_8.setObjectName(u"horizontalLayout_8")
-        self.pushButton_28 = QPushButton(self.frame_9)
-        self.pushButton_28.setObjectName(u"pushButton_28")
-        self.pushButton_28.setFont(font3)
-        self.pushButton_28.setStyleSheet(u"border: 2px solid ;\n"
+        self.pb_reset = QPushButton(self.frame_9)
+        self.pb_reset.setObjectName(u"pb_reset")
+        self.pb_reset.setFont(font3)
+        self.pb_reset.setStyleSheet(u"border: 2px solid ;\n"
 "border-radius: 5px;\n"
 "border-color: rgb(255, 116, 195);\n"
 "background-color: rgb(255, 116, 195);\n"
 "color: rgb(255, 255, 255);\n"
 "")
 
-        self.horizontalLayout_8.addWidget(self.pushButton_28)
+        self.horizontalLayout_8.addWidget(self.pb_reset)
 
-        self.pushButton_26 = QPushButton(self.frame_9)
-        self.pushButton_26.setObjectName(u"pushButton_26")
-        self.pushButton_26.setFont(font4)
-        self.pushButton_26.setStyleSheet(u"border: 2px solid ;\n"
+        self.pb_saveAs = QPushButton(self.frame_9)
+        self.pb_saveAs.setObjectName(u"pb_saveAs")
+        self.pb_saveAs.setFont(font4)
+        self.pb_saveAs.setStyleSheet(u"border: 2px solid ;\n"
 "border-radius: 5px;\n"
 "border-color: rgb(0, 132, 0);\n"
 "background-color: rgb(0, 132, 0);\n"
 "color: rgb(255, 255, 255);\n"
 "")
 
-        self.horizontalLayout_8.addWidget(self.pushButton_26)
+        self.horizontalLayout_8.addWidget(self.pb_saveAs)
 
-        self.pushButton_27 = QPushButton(self.frame_9)
-        self.pushButton_27.setObjectName(u"pushButton_27")
-        self.pushButton_27.setFont(font4)
-        self.pushButton_27.setStyleSheet(u"border: 2px solid ;\n"
+        self.pb_save = QPushButton(self.frame_9)
+        self.pb_save.setObjectName(u"pb_save")
+        self.pb_save.setFont(font4)
+        self.pb_save.setStyleSheet(u"border: 2px solid ;\n"
 "color: rgb(255, 255, 255);\n"
 "border-color: rgb(0, 132, 0);\n"
 "border-radius: 5px;\n"
@@ -946,7 +946,7 @@ class Ui_MainForm(object):
 "\n"
 "")
 
-        self.horizontalLayout_8.addWidget(self.pushButton_27)
+        self.horizontalLayout_8.addWidget(self.pb_save)
 
 
         self.verticalLayout_9.addWidget(self.frame_9)
@@ -1036,9 +1036,9 @@ class Ui_MainForm(object):
         self.pushButton_22.setText(QCoreApplication.translate("MainForm", u"-", None))
         self.pushButton_21.setText(QCoreApplication.translate("MainForm", u"+", None))
         self.pushButton_20.setText(QCoreApplication.translate("MainForm", u"-", None))
-        self.pushButton_28.setText(QCoreApplication.translate("MainForm", u"Reset", None))
-        self.pushButton_26.setText(QCoreApplication.translate("MainForm", u"Save As", None))
-        self.pushButton_27.setText(QCoreApplication.translate("MainForm", u"Save ", None))
+        self.pb_reset.setText(QCoreApplication.translate("MainForm", u"Reset", None))
+        self.pb_saveAs.setText(QCoreApplication.translate("MainForm", u"Save As", None))
+        self.pb_save.setText(QCoreApplication.translate("MainForm", u"Save ", None))
         self.lb_subscript.setText(QCoreApplication.translate("MainForm", u"Powered by Chizu Denki Co., Ltd.", None))
     # retranslateUi
 

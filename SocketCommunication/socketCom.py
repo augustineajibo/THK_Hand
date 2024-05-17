@@ -2,9 +2,10 @@
 import socket
 
 class THK_Hand_Controller:
-    #def __init__(self, host, port):
+
     def __init__(self):
-        self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        #client_socket=socket
+        self.client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
     def is_valid_ip(self,ip_address):
         parts = ip_address.split('.')
@@ -20,6 +21,7 @@ class THK_Hand_Controller:
                 return print("Incorrect IP address {}".format(*ip_address))
         return ip_address
 
+    """
     def get_ip_port(self):
         host=[]
         port=[]
@@ -36,67 +38,70 @@ class THK_Hand_Controller:
             print("Invalid ip or port entered")
 
         return (host[0], port[0])
+    """
 
     def connect(self,host,port):
-        #host, port =self.get_ip_port()
-        #print(host)
-        #print(port)
+        status=[]
         try:
-            self.socket.connect((host, port))
+            self.client_socket.connect((host, port))
+            status.append(1)
             print("Connected to THK hand at {} and port {}".format(host,port))
         except ConnectionRefusedError:
-            print("Connection to robot hand server failed")
-            exit(1)
+            status.append(0)
+            print("Connection to THK hand failed!")
+        return status
 
 
     def send_command(self, command):
         try:
-            self.socket.send(command)
+            self.client_socket.send(command)
 
         except ConnectionResetError:
             print("Connection to robot hand server lost")
             exit(1)
 
-    def receive_feedback(self):
-        try:
-            feedback = self.socket.recv(1024)
-            return feedback
-        except ConnectionResetError:
-            print("Connection to robot hand server lost")
-            exit(1)
+    def add_command_length(self, cmd):
+        length = len(cmd[1:])
+        cmd.insert(1, length)
+        return cmd
+    def send(self,cmd):
+        self.client_socket.sendall(bytearray(cmd))
+        result = self.client_socket.recv(1024)
+        return result
+    def commandSend(self,cmd):
+        cmd = self.add_command_length(cmd)
+        response_data = self.send(cmd)
+        # result = list(response_data)
+        # no = output_numbers[0]
+        # print(f'Response from hand {output_numbers}')
+        # msg = self.status_message(no)
+        return response_data
 
-    def adjust_joint_orientation(current_orientation, movement_steps, linear_limit, rotational_limit):
-    # Check the joint type (linear or rotational)
-        joint_type = "linear" if "linear" in movement_steps else "rotational"
+    def MoveOrigin(self):
+        # move_origin = [0x00, 0x01, 0x01]
+        cmd = [0x00,0x00]
+        result = self.commandSend(cmd)
+        print(result)
+        if result[2] == 2:
+            print("Error")
+        else:
+            print("OK")
 
-    # Extract movement steps for linear and rotational movements
-        linear_step = movement_steps.get('linear', 0)
-        rotational_step = movement_steps.get('rotational', 0)
 
-    # Adjust joint orientation based on the steps while checking limits
-        if joint_type == "linear":
-            new_orientation = current_orientation + linear_step
-        if abs(new_orientation) > linear_limit:
-            print("Linear movement limit exceeded")
-            return current_orientation
-        else:  # rotational joint
-            new_orientation = current_orientation + rotational_step
-            if abs(new_orientation) > rotational_limit:
-                print("Rotational movement limit exceeded")
-            return current_orientation
 
-        return new_orientation
+
 
     def close(self):
-        self.socket.close()
+        self.client_socket.close()
 
 # Example usage:
 #if __name__ == "__main__":
 
     #hand=THK_Hand_Controller()
     #host = '192.168.30.200'
-    #port = 1024
+   # port = 1024
     #hand.connect(host,port)
+    #hand.MoveOrigin()
 
 
     #controller = RobotHandController(host, port)

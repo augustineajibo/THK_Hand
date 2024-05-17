@@ -1577,7 +1577,7 @@ color: rgb(25, 25, 25);</string>
            </property>
            <layout class="QHBoxLayout" name="horizontalLayout_8">
             <item>
-             <widget class="QPushButton" name="pushButton_28">
+             <widget class="QPushButton" name="pb_reset">
               <property name="font">
                <font>
                 <pointsize>14</pointsize>
@@ -1597,7 +1597,7 @@ color: rgb(255, 255, 255);
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="pushButton_26">
+             <widget class="QPushButton" name="pb_saveAs">
               <property name="font">
                <font>
                 <pointsize>16</pointsize>
@@ -1617,7 +1617,7 @@ color: rgb(255, 255, 255);
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="pushButton_27">
+             <widget class="QPushButton" name="pb_save">
               <property name="font">
                <font>
                 <pointsize>16</pointsize>
