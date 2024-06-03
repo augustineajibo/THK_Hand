@@ -143,7 +143,6 @@ class THK_Hand():
         result = self.move(pos,speed,finger_id)
         return result
 
-    C:\Users\k167\PycharmProjects
 
 
     def move(self, pos, speed, id):

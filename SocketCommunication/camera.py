@@ -11,7 +11,7 @@ def main(args):
     pipe = rs.pipeline()
     config = rs.config()
 
-    #config.enable_stream(rs.stream.depth, 640, 480, rs.format.z16, 30)
+    config.enable_stream(rs.stream.depth, 640, 480, rs.format.z16, 30)
     config.enable_stream(rs.stream.color, 640, 480, rs.format.bgr8, 30)
 
     pipe.start(config)
@@ -23,16 +23,16 @@ def main(args):
 
     while True:
         frame = pipe.wait_for_frames()
-        #depth_frame= frame.get_depth_frame()
+        depth_frame= frame.get_depth_frame()
         color_frame= frame.get_color_frame()
 
-        #depth_image =np.asanyarray(depth_frame.get_data())
+        depth_image =np.asanyarray(depth_frame.get_data())
         color_image =np.asanyarray(color_frame.get_data())
         #print(type(color_image))
-        #depth_cm = cv2.applyColorMap(cv2.convertScaleAbs(depth_image,alpha=0.5),cv2.COLORMAP_JET)
+        depth_cm = cv2.applyColorMap(cv2.convertScaleAbs(depth_image,alpha=0.5),cv2.COLORMAP_JET)
 
         cv2.imshow("rgb", color_image)
-        #cv2.imshow("depth",depth_cm)
+        cv2.imshow("depth",depth_cm)
 
 
 
