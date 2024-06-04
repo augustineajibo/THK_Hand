@@ -144,7 +144,7 @@
              <widget class="QFrame" name="frame_12">
               <property name="maximumSize">
                <size>
-                <width>200</width>
+                <width>16777215</width>
                 <height>16777215</height>
                </size>
               </property>
@@ -222,7 +222,7 @@
                 <widget class="QPushButton" name="pb_connect">
                  <property name="maximumSize">
                   <size>
-                   <width>150</width>
+                   <width>100</width>
                    <height>40</height>
                   </size>
                  </property>
@@ -342,7 +342,7 @@ border-top-color: rgb(186, 186, 186);</string>
                 <widget class="QPushButton" name="pb_disconnect">
                  <property name="maximumSize">
                   <size>
-                   <width>150</width>
+                   <width>100</width>
                    <height>40</height>
                   </size>
                  </property>
@@ -536,6 +536,12 @@ background-color: rgb(255, 0, 0);</string>
       </item>
       <item>
        <widget class="QFrame" name="frame_3">
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>16777215</height>
+         </size>
+        </property>
         <property name="styleSheet">
          <string notr="true">background-color: rgb(163, 163, 163);</string>
         </property>
@@ -779,7 +785,7 @@ background-color: rgb(255, 0, 0);</string>
        <widget class="QFrame" name="frame_2">
         <property name="maximumSize">
          <size>
-          <width>400</width>
+          <width>300</width>
           <height>16777215</height>
          </size>
         </property>

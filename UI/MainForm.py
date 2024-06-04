@@ -95,7 +95,7 @@ class Ui_MainForm(object):
         self.horizontalLayout_8.setObjectName(u"horizontalLayout_8")
         self.frame_12 = QFrame(self.frame_10)
         self.frame_12.setObjectName(u"frame_12")
-        self.frame_12.setMaximumSize(QSize(200, 16777215))
+        self.frame_12.setMaximumSize(QSize(16777215, 16777215))
         self.frame_12.setFrameShape(QFrame.StyledPanel)
         self.frame_12.setFrameShadow(QFrame.Raised)
         self.verticalLayout_5 = QVBoxLayout(self.frame_12)
@@ -126,7 +126,7 @@ class Ui_MainForm(object):
 
         self.pb_connect = QPushButton(self.frame_12)
         self.pb_connect.setObjectName(u"pb_connect")
-        self.pb_connect.setMaximumSize(QSize(150, 40))
+        self.pb_connect.setMaximumSize(QSize(100, 40))
         self.pb_connect.setFont(font2)
         self.pb_connect.setMouseTracking(True)
         self.pb_connect.setTabletTracking(True)
@@ -188,7 +188,7 @@ class Ui_MainForm(object):
 
         self.pb_disconnect = QPushButton(self.frame_11)
         self.pb_disconnect.setObjectName(u"pb_disconnect")
-        self.pb_disconnect.setMaximumSize(QSize(150, 40))
+        self.pb_disconnect.setMaximumSize(QSize(100, 40))
         self.pb_disconnect.setFont(font2)
         self.pb_disconnect.setStyleSheet(u"border: 2px solid ;\n"
 "color: rgb(255, 255, 255);\n"
@@ -295,6 +295,7 @@ class Ui_MainForm(object):
 
         self.frame_3 = QFrame(self.frame)
         self.frame_3.setObjectName(u"frame_3")
+        self.frame_3.setMaximumSize(QSize(16777215, 16777215))
         self.frame_3.setStyleSheet(u"background-color: rgb(163, 163, 163);")
         self.frame_3.setFrameShape(QFrame.StyledPanel)
         self.frame_3.setFrameShadow(QFrame.Raised)
@@ -429,7 +430,7 @@ class Ui_MainForm(object):
 
         self.frame_2 = QFrame(self.frame)
         self.frame_2.setObjectName(u"frame_2")
-        self.frame_2.setMaximumSize(QSize(400, 16777215))
+        self.frame_2.setMaximumSize(QSize(300, 16777215))
         self.frame_2.setStyleSheet(u"background-color: rgb(227, 227, 227);")
         self.frame_2.setFrameShape(QFrame.StyledPanel)
         self.frame_2.setFrameShadow(QFrame.Raised)
