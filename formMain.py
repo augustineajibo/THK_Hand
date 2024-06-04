@@ -43,9 +43,6 @@ class MainForm(qtw.QWidget, Ui_MainForm):
         self.pb_reset.clicked.connect(self.reset)
         self.pb_start.clicked.connect(self.capture_photo)
         self.pb_capture.clicked.connect(self.stop)
-       # self.map = Map(img_path,parent=self.lb_camera)
-
-        #self.lb_camera.setAlignment(Qt.AlignCenter)
 
 
     def update_image(self, frame):
