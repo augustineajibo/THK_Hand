@@ -210,7 +210,7 @@ class THK_Hand():
 
 
 #
-hand = THK_Hand()
+#hand = THK_Hand()
 #hand.MoveAllGrip([200,30,0,2],200)
 #hand.MoveOrigin()
 #print(hand.move(-200,20,id=[3]))
@@ -219,15 +219,19 @@ hand = THK_Hand()
 # over_current = [0x04,0x00,0x00,0x00]
 # action_mode =[0x08,0x00,0x00,0x00]
 #operating_condition =[0x10,0x00,0x00,0x00]
-# encoder_count =[0x20,0x00,0x00,0x00]
+#encoder_count =[0x20,0x00,0x00,0x00]
 #sensor_reaction_status =[0x40,0x00,0x00,0x00]
-sensor_value =[0x80, 0x00, 0x00, 0x00]
+#sensor_value =[0x80, 0x00, 0x00, 0x00]
 #
 # result = hand.get_data(encoder_count)
 # print(result)
 # hand.MoveAllFingers(100)
 #hand.MoveAllGrip(-200,100)
 #
-while True:
-     result = hand.get_data(sensor_value)
-     print(result)
+#while True:
+     #result = hand.get_data(sensor_value)
+    # result2 = hand.get_data(sensor_reaction_status)
+    # result3=hand.get_data(encoder_count)
+    # print(result)
+     #print(result2)
+     #print(result3)

@@ -24,7 +24,7 @@ class Ui_MainForm(object):
         if not MainForm.objectName():
             MainForm.setObjectName(u"MainForm")
         MainForm.setWindowModality(Qt.WindowModal)
-        MainForm.resize(1323, 863)
+        MainForm.resize(1323, 860)
         font = QFont()
         font.setPointSize(12)
         MainForm.setFont(font)
@@ -165,6 +165,8 @@ class Ui_MainForm(object):
 "background-color: rgb(186, 186, 186);\n"
 "border-bottom-color: rgb(186, 186, 186);\n"
 "border-top-color: rgb(186, 186, 186);")
+        self.le_ip.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
+        self.le_ip.setReadOnly(True)
 
         self.verticalLayout_6.addWidget(self.le_ip)
 
@@ -176,6 +178,8 @@ class Ui_MainForm(object):
 "background-color: rgb(186, 186, 186);\n"
 "border-bottom-color: rgb(186, 186, 186);\n"
 "border-top-color: rgb(186, 186, 186);")
+        self.le_port.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
+        self.le_port.setReadOnly(True)
 
         self.verticalLayout_6.addWidget(self.le_port)
 
@@ -232,19 +236,19 @@ class Ui_MainForm(object):
         self.frame_16.setFrameShadow(QFrame.Raised)
         self.verticalLayout_7 = QVBoxLayout(self.frame_16)
         self.verticalLayout_7.setObjectName(u"verticalLayout_7")
-        self.pushButton = QPushButton(self.frame_16)
-        self.pushButton.setObjectName(u"pushButton")
-        self.pushButton.setMaximumSize(QSize(150, 40))
-        self.pushButton.setFont(font2)
+        self.pb_add = QPushButton(self.frame_16)
+        self.pb_add.setObjectName(u"pb_add")
+        self.pb_add.setMaximumSize(QSize(150, 40))
+        self.pb_add.setFont(font2)
 
-        self.verticalLayout_7.addWidget(self.pushButton)
+        self.verticalLayout_7.addWidget(self.pb_add)
 
-        self.pushButton_2 = QPushButton(self.frame_16)
-        self.pushButton_2.setObjectName(u"pushButton_2")
-        self.pushButton_2.setMaximumSize(QSize(150, 40))
-        self.pushButton_2.setFont(font2)
+        self.pb_load = QPushButton(self.frame_16)
+        self.pb_load.setObjectName(u"pb_load")
+        self.pb_load.setMaximumSize(QSize(150, 40))
+        self.pb_load.setFont(font2)
 
-        self.verticalLayout_7.addWidget(self.pushButton_2)
+        self.verticalLayout_7.addWidget(self.pb_load)
 
 
         self.horizontalLayout_9.addWidget(self.frame_16)
@@ -262,19 +266,19 @@ class Ui_MainForm(object):
         self.frame_15.setFrameShadow(QFrame.Raised)
         self.verticalLayout_8 = QVBoxLayout(self.frame_15)
         self.verticalLayout_8.setObjectName(u"verticalLayout_8")
-        self.pushButton_3 = QPushButton(self.frame_15)
-        self.pushButton_3.setObjectName(u"pushButton_3")
-        self.pushButton_3.setMaximumSize(QSize(150, 40))
-        self.pushButton_3.setFont(font2)
+        self.pb_save = QPushButton(self.frame_15)
+        self.pb_save.setObjectName(u"pb_save")
+        self.pb_save.setMaximumSize(QSize(150, 40))
+        self.pb_save.setFont(font2)
 
-        self.verticalLayout_8.addWidget(self.pushButton_3)
+        self.verticalLayout_8.addWidget(self.pb_save)
 
-        self.pushButton_4 = QPushButton(self.frame_15)
-        self.pushButton_4.setObjectName(u"pushButton_4")
-        self.pushButton_4.setMaximumSize(QSize(150, 40))
-        self.pushButton_4.setFont(font2)
+        self.pb_delete = QPushButton(self.frame_15)
+        self.pb_delete.setObjectName(u"pb_delete")
+        self.pb_delete.setMaximumSize(QSize(150, 40))
+        self.pb_delete.setFont(font2)
 
-        self.verticalLayout_8.addWidget(self.pushButton_4)
+        self.verticalLayout_8.addWidget(self.pb_delete)
 
 
         self.horizontalLayout_9.addWidget(self.frame_15)
@@ -337,6 +341,16 @@ class Ui_MainForm(object):
 
         self.horizontalLayout_4.addWidget(self.lb_rgb)
 
+        self.line_4 = QFrame(self.frame_6)
+        self.line_4.setObjectName(u"line_4")
+        self.line_4.setStyleSheet(u"color: rgb(50, 50, 50);\n"
+"background-color: rgb(72, 72, 72);")
+        self.line_4.setLineWidth(2)
+        self.line_4.setFrameShape(QFrame.VLine)
+        self.line_4.setFrameShadow(QFrame.Sunken)
+
+        self.horizontalLayout_4.addWidget(self.line_4)
+
         self.lb_rgbd = QLabel(self.frame_6)
         self.lb_rgbd.setObjectName(u"lb_rgbd")
         self.lb_rgbd.setStyleSheet(u"background-color: rgb(204, 204, 204);")
@@ -348,7 +362,7 @@ class Ui_MainForm(object):
 
         self.frame_7 = QFrame(self.frame_3)
         self.frame_7.setObjectName(u"frame_7")
-        self.frame_7.setMaximumSize(QSize(16777215, 50))
+        self.frame_7.setMaximumSize(QSize(16777215, 40))
         self.frame_7.setStyleSheet(u"background-color: rgb(162, 162, 162);")
         self.frame_7.setFrameShape(QFrame.StyledPanel)
         self.frame_7.setFrameShadow(QFrame.Raised)
@@ -381,11 +395,139 @@ class Ui_MainForm(object):
 
         self.horizontalLayout_6.addWidget(self.lb_detection)
 
-        self.lb_parameters = QLabel(self.frame_8)
-        self.lb_parameters.setObjectName(u"lb_parameters")
-        self.lb_parameters.setStyleSheet(u"background-color: rgb(222, 222, 222);")
+        self.line_5 = QFrame(self.frame_8)
+        self.line_5.setObjectName(u"line_5")
+        self.line_5.setStyleSheet(u"background-color: rgb(71, 71, 71);")
+        self.line_5.setLineWidth(2)
+        self.line_5.setFrameShape(QFrame.VLine)
+        self.line_5.setFrameShadow(QFrame.Sunken)
 
-        self.horizontalLayout_6.addWidget(self.lb_parameters)
+        self.horizontalLayout_6.addWidget(self.line_5)
+
+        self.frame_32 = QFrame(self.frame_8)
+        self.frame_32.setObjectName(u"frame_32")
+        self.frame_32.setFrameShape(QFrame.StyledPanel)
+        self.frame_32.setFrameShadow(QFrame.Raised)
+        self.verticalLayout_19 = QVBoxLayout(self.frame_32)
+        self.verticalLayout_19.setObjectName(u"verticalLayout_19")
+        self.frame_33 = QFrame(self.frame_32)
+        self.frame_33.setObjectName(u"frame_33")
+        self.frame_33.setMaximumSize(QSize(16777215, 40))
+        self.frame_33.setFrameShape(QFrame.StyledPanel)
+        self.frame_33.setFrameShadow(QFrame.Raised)
+        self.horizontalLayout_15 = QHBoxLayout(self.frame_33)
+        self.horizontalLayout_15.setObjectName(u"horizontalLayout_15")
+        self.label_11 = QLabel(self.frame_33)
+        self.label_11.setObjectName(u"label_11")
+        self.label_11.setFont(font2)
+
+        self.horizontalLayout_15.addWidget(self.label_11)
+
+        self.lb_itemdetected = QLabel(self.frame_33)
+        self.lb_itemdetected.setObjectName(u"lb_itemdetected")
+        self.lb_itemdetected.setFont(font)
+        self.lb_itemdetected.setStyleSheet(u"background-color: rgb(255, 255, 255);")
+        self.lb_itemdetected.setAlignment(Qt.AlignCenter)
+
+        self.horizontalLayout_15.addWidget(self.lb_itemdetected)
+
+
+        self.verticalLayout_19.addWidget(self.frame_33)
+
+        self.frame_37 = QFrame(self.frame_32)
+        self.frame_37.setObjectName(u"frame_37")
+        self.frame_37.setMaximumSize(QSize(16777215, 40))
+        self.frame_37.setFrameShape(QFrame.StyledPanel)
+        self.frame_37.setFrameShadow(QFrame.Raised)
+        self.horizontalLayout_19 = QHBoxLayout(self.frame_37)
+        self.horizontalLayout_19.setObjectName(u"horizontalLayout_19")
+        self.label_13 = QLabel(self.frame_37)
+        self.label_13.setObjectName(u"label_13")
+        self.label_13.setFont(font2)
+
+        self.horizontalLayout_19.addWidget(self.label_13)
+
+        self.lb_accuracy = QLabel(self.frame_37)
+        self.lb_accuracy.setObjectName(u"lb_accuracy")
+        self.lb_accuracy.setFont(font)
+        self.lb_accuracy.setStyleSheet(u"background-color: rgb(255, 255, 255);")
+
+        self.horizontalLayout_19.addWidget(self.lb_accuracy)
+
+
+        self.verticalLayout_19.addWidget(self.frame_37)
+
+        self.frame_34 = QFrame(self.frame_32)
+        self.frame_34.setObjectName(u"frame_34")
+        self.frame_34.setMaximumSize(QSize(16777215, 40))
+        self.frame_34.setFrameShape(QFrame.StyledPanel)
+        self.frame_34.setFrameShadow(QFrame.Raised)
+        self.horizontalLayout_16 = QHBoxLayout(self.frame_34)
+        self.horizontalLayout_16.setObjectName(u"horizontalLayout_16")
+        self.label_12 = QLabel(self.frame_34)
+        self.label_12.setObjectName(u"label_12")
+        self.label_12.setFont(font2)
+
+        self.horizontalLayout_16.addWidget(self.label_12)
+
+        self.lb_x = QLabel(self.frame_34)
+        self.lb_x.setObjectName(u"lb_x")
+        self.lb_x.setFont(font)
+        self.lb_x.setStyleSheet(u"background-color: rgb(255, 255, 255);")
+
+        self.horizontalLayout_16.addWidget(self.lb_x)
+
+
+        self.verticalLayout_19.addWidget(self.frame_34)
+
+        self.frame_35 = QFrame(self.frame_32)
+        self.frame_35.setObjectName(u"frame_35")
+        self.frame_35.setMaximumSize(QSize(16777215, 40))
+        self.frame_35.setFrameShape(QFrame.StyledPanel)
+        self.frame_35.setFrameShadow(QFrame.Raised)
+        self.horizontalLayout_17 = QHBoxLayout(self.frame_35)
+        self.horizontalLayout_17.setObjectName(u"horizontalLayout_17")
+        self.label_14 = QLabel(self.frame_35)
+        self.label_14.setObjectName(u"label_14")
+        self.label_14.setFont(font2)
+
+        self.horizontalLayout_17.addWidget(self.label_14)
+
+        self.lb_y = QLabel(self.frame_35)
+        self.lb_y.setObjectName(u"lb_y")
+        self.lb_y.setFont(font)
+        self.lb_y.setStyleSheet(u"background-color: rgb(255, 255, 255);")
+
+        self.horizontalLayout_17.addWidget(self.lb_y)
+
+
+        self.verticalLayout_19.addWidget(self.frame_35)
+
+        self.frame_36 = QFrame(self.frame_32)
+        self.frame_36.setObjectName(u"frame_36")
+        self.frame_36.setMaximumSize(QSize(16777215, 40))
+        self.frame_36.setFrameShape(QFrame.StyledPanel)
+        self.frame_36.setFrameShadow(QFrame.Raised)
+        self.horizontalLayout_18 = QHBoxLayout(self.frame_36)
+        self.horizontalLayout_18.setObjectName(u"horizontalLayout_18")
+        self.label_16 = QLabel(self.frame_36)
+        self.label_16.setObjectName(u"label_16")
+        self.label_16.setFont(font2)
+
+        self.horizontalLayout_18.addWidget(self.label_16)
+
+        self.lb_z = QLabel(self.frame_36)
+        self.lb_z.setObjectName(u"lb_z")
+        self.lb_z.setFont(font)
+        self.lb_z.setStyleSheet(u"background-color: rgb(255, 255, 255);")
+
+        self.horizontalLayout_18.addWidget(self.lb_z)
+
+
+        self.verticalLayout_19.addWidget(self.frame_36)
+
+
+        self.horizontalLayout_6.addWidget(self.frame_32)
 
 
         self.verticalLayout_3.addWidget(self.frame_8)
@@ -798,19 +940,19 @@ class Ui_MainForm(object):
 
         self.horizontalLayout_13.addWidget(self.pb_reset)
 
-        self.pb_saveas = QPushButton(self.frame_29)
-        self.pb_saveas.setObjectName(u"pb_saveas")
-        self.pb_saveas.setMaximumSize(QSize(16777215, 40))
-        self.pb_saveas.setFont(font2)
+        self.pb_saveasJog = QPushButton(self.frame_29)
+        self.pb_saveasJog.setObjectName(u"pb_saveasJog")
+        self.pb_saveasJog.setMaximumSize(QSize(16777215, 40))
+        self.pb_saveasJog.setFont(font2)
 
-        self.horizontalLayout_13.addWidget(self.pb_saveas)
+        self.horizontalLayout_13.addWidget(self.pb_saveasJog)
 
-        self.pb_save = QPushButton(self.frame_29)
-        self.pb_save.setObjectName(u"pb_save")
-        self.pb_save.setMaximumSize(QSize(16777215, 40))
-        self.pb_save.setFont(font2)
+        self.pb_saveJog = QPushButton(self.frame_29)
+        self.pb_saveJog.setObjectName(u"pb_saveJog")
+        self.pb_saveJog.setMaximumSize(QSize(16777215, 40))
+        self.pb_saveJog.setFont(font2)
 
-        self.horizontalLayout_13.addWidget(self.pb_save)
+        self.horizontalLayout_13.addWidget(self.pb_saveJog)
 
 
         self.verticalLayout_9.addWidget(self.frame_29)
@@ -864,13 +1006,15 @@ class Ui_MainForm(object):
         self.label_7.setText(QCoreApplication.translate("MainForm", u"Port", None))
         self.label_8.setText(QCoreApplication.translate("MainForm", u"Status", None))
         self.pb_connect.setText(QCoreApplication.translate("MainForm", u"Connect", None))
+        self.le_ip.setPlaceholderText(QCoreApplication.translate("MainForm", u"192.168.30.200", None))
+        self.le_port.setPlaceholderText(QCoreApplication.translate("MainForm", u"1024", None))
         self.rb_status.setText(QCoreApplication.translate("MainForm", u"Connected", None))
         self.pb_disconnect.setText(QCoreApplication.translate("MainForm", u"Disconnect", None))
         self.label_9.setText(QCoreApplication.translate("MainForm", u"Hand", None))
-        self.pushButton.setText(QCoreApplication.translate("MainForm", u"Add", None))
-        self.pushButton_2.setText(QCoreApplication.translate("MainForm", u"Load", None))
-        self.pushButton_3.setText(QCoreApplication.translate("MainForm", u"Save", None))
-        self.pushButton_4.setText(QCoreApplication.translate("MainForm", u"Delete", None))
+        self.pb_add.setText(QCoreApplication.translate("MainForm", u"Add", None))
+        self.pb_load.setText(QCoreApplication.translate("MainForm", u"Load", None))
+        self.pb_save.setText(QCoreApplication.translate("MainForm", u"Save", None))
+        self.pb_delete.setText(QCoreApplication.translate("MainForm", u"Delete", None))
         self.label_2.setText(QCoreApplication.translate("MainForm", u"RGB", None))
         self.label.setText(QCoreApplication.translate("MainForm", u"RGB_D", None))
         self.lb_rgb.setText("")
@@ -878,7 +1022,16 @@ class Ui_MainForm(object):
         self.label_3.setText(QCoreApplication.translate("MainForm", u"Detection", None))
         self.label_6.setText(QCoreApplication.translate("MainForm", u"Parameters", None))
         self.lb_detection.setText("")
-        self.lb_parameters.setText("")
+        self.label_11.setText(QCoreApplication.translate("MainForm", u"Detected Item:", None))
+        self.lb_itemdetected.setText("")
+        self.label_13.setText(QCoreApplication.translate("MainForm", u"Accuracy:", None))
+        self.lb_accuracy.setText("")
+        self.label_12.setText(QCoreApplication.translate("MainForm", u"X", None))
+        self.lb_x.setText("")
+        self.label_14.setText(QCoreApplication.translate("MainForm", u"Y", None))
+        self.lb_y.setText("")
+        self.label_16.setText(QCoreApplication.translate("MainForm", u"Z", None))
+        self.lb_z.setText("")
         self.pb_start.setText(QCoreApplication.translate("MainForm", u"Start", None))
         self.pb_capture.setText(QCoreApplication.translate("MainForm", u"Capture", None))
         self.pb_grasp.setText(QCoreApplication.translate("MainForm", u"Grasp", None))
@@ -903,8 +1056,8 @@ class Ui_MainForm(object):
         self.pushButton_21.setText(QCoreApplication.translate("MainForm", u"+", None))
         self.pushButton_22.setText(QCoreApplication.translate("MainForm", u"-", None))
         self.pb_reset.setText(QCoreApplication.translate("MainForm", u"Reset", None))
-        self.pb_saveas.setText(QCoreApplication.translate("MainForm", u"Save As", None))
-        self.pb_save.setText(QCoreApplication.translate("MainForm", u"Save", None))
+        self.pb_saveasJog.setText(QCoreApplication.translate("MainForm", u"Save As", None))
+        self.pb_saveJog.setText(QCoreApplication.translate("MainForm", u"Save", None))
         self.lb_subscript.setText(QCoreApplication.translate("MainForm", u"Powered by Chizu Denki Co., Ltd.", None))
     # retranslateUi
 

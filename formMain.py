@@ -30,6 +30,10 @@ from SocketCommunication import socketCom
 
 
 
+import cv2
+from PIL import Image
+from ultralytics import YOLO
+
 class MainForm(qtw.QWidget, Ui_MainForm):
 
     def __init__(self):
@@ -37,12 +41,16 @@ class MainForm(qtw.QWidget, Ui_MainForm):
         self.setupUi(self)
         #self.image =" /Images/"
 
+        self.item = "Pet-bottle"
+
         self.running=True
 
         self.pb_connect.clicked.connect(self.Connect_2_Hand)
         self.pb_reset.clicked.connect(self.reset)
         self.pb_start.clicked.connect(self.capture_photo)
         self.pb_capture.clicked.connect(self.stop)
+        self.pb_save.clicked.connect(self.itemDetection)
+        self.pb_load.clicked.connect(self.detectionCheck)
 
 
     def UpdateRGBImage(self, frame):
@@ -62,7 +70,7 @@ class MainForm(qtw.QWidget, Ui_MainForm):
         image = QImage(frame, frame.shape[1], frame.shape[0], frame.shape[1] * 3, QImage.Format_RGB888)
         self.lb_detection.setFixedSize(360, 360)
         self.lb_detection.setPixmap(QPixmap.fromImage(image))
-        self.lb_detection.setPixmap(QPixmap.fromImage(image))
+        #self.lb_detection.setPixmap(QPixmap.fromImage(image))
 
 
     def capture_photo(self):
@@ -133,8 +141,41 @@ class MainForm(qtw.QWidget, Ui_MainForm):
             print("Check hand connection")
 
         return
+    def itemDetection(self,item):
+        item = "Pet-bottle"
+        print("started.............")
+        items=["Pet-bottle","Cardboard","Wine-glass","Sponge"]
+        #print(item)
 
+        # Flag to indicate if item was found
+        item_found = False
 
+        detected_item = " "
+
+        # Loop through each element in the list
+        for element in items:
+            if element == item:
+                item_found = True
+                detected_item = item
+                break
+
+        # Check the flag and print the appropriate message
+        if item_found:
+            print(f"'{detected_item}' was found in the list.")
+            self.lb_itemdetected.setText(detected_item)
+            #self.cb_items.addItem(detected_item)
+        else:
+            print(f"'{detected_item}' was not found in the list.")
+
+        return
+    def detectionCheck(self, image):
+        model = YOLO("./Model/best.pt")
+        results = model('./images_new/rgb_image_1.jpg', save=True)
+        image = "/runs/segment/predict4/rgb_image_1.jpg"
+        self.lb_detection.setFixedSize(360, 360)
+        self.lb_detection.setPixmap(QPixmap.fromImage(image))
+
+        return
 
 
 if __name__ == "__main__":
