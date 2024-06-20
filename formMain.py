@@ -6,11 +6,13 @@ import cv2
 import time
 import math
 import os
+import csv
 from PySide6 import QtCore as qtc
 from PySide6 import QtWidgets as qtw
 from PySide6 import QtGui as qtg
 from UI.MainForm import Ui_MainForm
 
+import shutil
 
 from PySide6.QtCore import QTimer,QPoint,QDateTime
 from PySide6.QtGui import *
@@ -28,8 +30,6 @@ pyqtSlot = Slot
 
 from SocketCommunication import socketCom
 
-
-
 import cv2
 from PIL import Image
 from ultralytics import YOLO
@@ -39,18 +39,88 @@ class MainForm(qtw.QWidget, Ui_MainForm):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
-        #self.image =" /Images/"
+        self.Finger_1_current_status = [0, 0, 0]
+        self.Finger_2_current_status = [0, 0, 0]
+        self.Finger_3_current_status = [0, 0, 0]
+        self.Finger_4_current_status = [0, 0, 0]
+
+        self.step = 50
+        self.new_value = 0
+
+
+
+
+        self.seg_image = "./runs/segment/predict/rgb_image.jpg"
+        self.captured_image = './Images_new/rgb_image.jpg'
+        #delete_files_and_folders(directory)
 
         self.item = "Pet-bottle"
 
         self.running=True
 
         self.pb_connect.clicked.connect(self.Connect_2_Hand)
-        self.pb_reset.clicked.connect(self.reset)
+        self.pb_reset.clicked.connect(self.reset_handPos)
+        self.pb_all_finger.clicked.connect(self.AllFinger)
+        self.pb_all_grip.clicked.connect(self.AllGrip)
         self.pb_start.clicked.connect(self.capture_photo)
         self.pb_capture.clicked.connect(self.stop)
         self.pb_save.clicked.connect(self.itemDetection)
-        self.pb_load.clicked.connect(self.detectionCheck)
+        self.pb_detect.clicked.connect(self.detectionCheck)
+        self.pb_saveJog.clicked.connect(self.save_to_csv)
+
+        self.pb_f1_joint1_pos.clicked.connect(self.Finger_1_joint_1_Pos)
+        self.pb_f1_joint1_neg.clicked.connect(self.Finger_1_joint_1_Neg)
+        self.pb_f1_joint2_pos.clicked.connect(self.Finger_1_joint_2_Pos)
+        self.pb_f1_joint2_neg.clicked.connect(self.Finger_1_joint_2_Neg)
+        self.pb_f1_joint3_pos.clicked.connect(self.Finger_1_joint_3_Pos)
+        self.pb_f1_joint3_neg.clicked.connect(self.Finger_1_joint_3_Neg)
+
+        self.pb_f2_joint1_pos.clicked.connect(self.Finger_2_joint_1_Pos)
+        self.pb_f2_joint1_neg.clicked.connect(self.Finger_2_joint_1_Neg)
+        self.pb_f2_joint2_pos.clicked.connect(self.Finger_2_joint_2_Pos)
+        self.pb_f2_joint2_neg.clicked.connect(self.Finger_2_joint_2_Neg)
+        self.pb_f2_joint3_pos.clicked.connect(self.Finger_2_joint_3_Pos)
+        self.pb_f2_joint3_neg.clicked.connect(self.Finger_2_joint_3_Neg)
+
+        self.pb_f3_joint1_pos.clicked.connect(self.Finger_3_joint_1_Pos)
+        self.pb_f3_joint1_neg.clicked.connect(self.Finger_3_joint_1_Neg)
+        self.pb_f3_joint2_pos.clicked.connect(self.Finger_3_joint_2_Pos)
+        self.pb_f3_joint2_neg.clicked.connect(self.Finger_3_joint_2_Neg)
+        self.pb_f3_joint3_pos.clicked.connect(self.Finger_3_joint_3_Pos)
+        self.pb_f3_joint3_neg.clicked.connect(self.Finger_3_joint_3_Neg)
+
+        self.pb_f4_joint1_pos.clicked.connect(self.Finger_4_joint_1_Pos)
+        self.pb_f4_joint1_neg.clicked.connect(self.Finger_4_joint_1_Neg)
+        self.pb_f4_joint2_pos.clicked.connect(self.Finger_4_joint_2_Pos)
+        self.pb_f4_joint2_neg.clicked.connect(self.Finger_4_joint_2_Neg)
+        self.pb_f4_joint3_pos.clicked.connect(self.Finger_4_joint_3_Pos)
+        self.pb_f4_joint3_neg.clicked.connect(self.Finger_4_joint_3_Neg)
+
+    def delete_files_and_folders(self, detection_dir):
+        print(detection_dir)
+        # Ensure the directory is a valid path
+        if not isinstance(detection_dir, (str, bytes, os.PathLike)):
+            raise TypeError(f"Expected str, bytes, os.PathLike or None, but got {type(detection_dir).__name__}")
+
+        # Check if the directory exists
+        if not os.path.exists(detection_dir):
+            print(f"The directory {detection_dir} does not exist.")
+            return
+
+        # Loop through all the items in the directory
+        for item in os.listdir(detection_dir):
+            item_path = os.path.join(detection_dir, item)
+
+            # If the item is a file, delete it
+            if os.path.isfile(item_path) or os.path.islink(item_path):
+                os.unlink(item_path)
+                print(f"Deleted file: {item_path}")
+
+            # If the item is a directory, delete it and its contents
+            elif os.path.isdir(item_path):
+                shutil.rmtree(item_path)
+                print(f"Deleted folder: {item_path}")
+
 
 
     def UpdateRGBImage(self, frame):
@@ -70,7 +140,8 @@ class MainForm(qtw.QWidget, Ui_MainForm):
         image = QImage(frame, frame.shape[1], frame.shape[0], frame.shape[1] * 3, QImage.Format_RGB888)
         self.lb_detection.setFixedSize(360, 360)
         self.lb_detection.setPixmap(QPixmap.fromImage(image))
-        #self.lb_detection.setPixmap(QPixmap.fromImage(image))
+        self.lb_detection.show()
+
 
 
     def capture_photo(self):
@@ -92,16 +163,16 @@ class MainForm(qtw.QWidget, Ui_MainForm):
 
             rgb_image = np.asanyarray(rgb_frame.get_data())
             depth_image = np.asanyarray(depth_frame.get_data())
-            #depth_image = cv2.applyColorMap(cv2.convertScaleAbs(depth_frame, alpha=0.5), cv2.COLORMAP_JET)
+
 
             self.UpdateRGBImage(rgb_image)
             self.UpdateDepthImage(depth_image)
-            self.UpdateDetection(rgb_image)
+
 
             frame_count += 1
             if frame_count == 20:
-                rgb_image_filename = os.path.join(output_directory, f'rgb_image_{1}.jpg')
-                depth_image_filename = os.path.join(output_directory, f'depth_image_{1}.jpg')
+                rgb_image_filename = os.path.join(output_directory, f'rgb_image.jpg')
+                depth_image_filename = os.path.join(output_directory, f'depth_image.jpg')
                 cv2.imwrite(rgb_image_filename, rgb_image)
                 cv2.imwrite(depth_image_filename, depth_image)
             if cv2.waitKey(1) == ord("q"):
@@ -129,7 +200,10 @@ class MainForm(qtw.QWidget, Ui_MainForm):
         hand.close()
         return(host, port)
 
-    def reset(self):
+
+
+
+    def reset_handPos(self):
         host,port = self.Connect_2_Hand()
         hand = socketCom.THK_Hand_Controller()
         status = hand.connect(host, port)
@@ -141,13 +215,638 @@ class MainForm(qtw.QWidget, Ui_MainForm):
             print("Check hand connection")
 
         return
-    def itemDetection(self,item):
-        item = "Pet-bottle"
-        print("started.............")
-        items=["Pet-bottle","Cardboard","Wine-glass","Sponge"]
-        #print(item)
 
-        # Flag to indicate if item was found
+    def AllGrip(self):
+        host, port = self.Connect_2_Hand()
+        pos = int(self.le_grip_pos.text())
+        speed = int(self.le_grip_speed.text())
+        hand = socketCom.THK_Hand_Controller()
+        status = hand.connect(host, port)
+
+        if status[0] == 1:
+            #hand.MoveOrigin()
+            hand.MoveAllGrip(pos,speed)
+            # hand.MoveAllFingers(-200,10)
+            hand.close()
+        else:
+            print("Check hand connection")
+        return
+
+    def AllFinger(self):
+        host, port = self.Connect_2_Hand()
+        pos = int(self.le_finger_pos.text())
+        speed = int(self.le_finger_speed.text())
+        hand = socketCom.THK_Hand_Controller()
+        status = hand.connect(host, port)
+
+        if status[0] == 1:
+            hand.MoveAllFingers(pos,speed)
+            hand.close()
+        else:
+            print("Check hand connection")
+        return
+
+    def Finger_1_Joint_1(self):
+        host, port = self.Connect_2_Hand()
+        speed = 10
+        finger_id = [9]
+        pos = self.Finger_1_current_status[0]
+        print(pos)
+        hand = socketCom.THK_Hand_Controller()
+        status = hand.connect(host, port)
+
+        if status[0] == 1:
+            hand.Specific_Rotation(pos,speed,finger_id)
+            hand.close()
+        else:
+            print("Check hand connection")
+        return
+
+    def Finger_1_Joint_2(self):
+        host, port = self.Connect_2_Hand()
+        speed = 10
+        finger_id = [1]
+        pos = self.Finger_1_current_status[1]
+        hand = socketCom.THK_Hand_Controller()
+        status = hand.connect(host, port)
+
+        if status[0] == 1:
+            hand.Specific_Linear(pos, speed,finger_id)
+            hand.close()
+        else:
+            print("Check hand connection")
+        return
+
+    def Finger_1_Joint_3(self):
+        host, port = self.Connect_2_Hand()
+        speed = 10
+        pos = self.Finger_1_current_status[2]
+        hand = socketCom.THK_Hand_Controller()
+        status = hand.connect(host, port)
+        finger_id = [2]
+
+        if status[0] == 1:
+            hand.Specific_Grip(pos, speed,finger_id)
+            hand.close()
+        else:
+            print("Check hand connection")
+        return
+
+    def Finger_2_Joint_1(self):
+        host, port = self.Connect_2_Hand()
+        speed = 10
+        finger_id = [10]
+        pos = self.Finger_2_current_status[0]
+        hand = socketCom.THK_Hand_Controller()
+        status = hand.connect(host, port)
+
+        if status[0] == 1:
+            hand.Specific_Rotation(pos,speed,finger_id)
+            hand.close()
+        else:
+            print("Check hand connection")
+        return
+
+    def Finger_2_Joint_2(self):
+        host, port = self.Connect_2_Hand()
+        speed = 10
+        finger_id = [3]
+        pos = self.Finger_2_current_status[1]
+        hand = socketCom.THK_Hand_Controller()
+        status = hand.connect(host, port)
+
+        if status[0] == 1:
+            hand.Specific_Linear(pos, speed,finger_id)
+            hand.close()
+        else:
+            print("Check hand connection")
+        return
+
+    def Finger_2_Joint_3(self):
+        host, port = self.Connect_2_Hand()
+        speed = 10
+        finger_id = [4]
+        pos = self.Finger_2_current_status[2]
+        hand = socketCom.THK_Hand_Controller()
+        status = hand.connect(host, port)
+
+
+        if status[0] == 1:
+            hand.Specific_Grip(pos, speed,finger_id)
+            hand.close()
+        else:
+            print("Check hand connection")
+        return
+
+    def Finger_3_Joint_1(self):
+        host, port = self.Connect_2_Hand()
+        speed = 10
+        finger_id = [11]
+        pos = self.Finger_3_current_status[0]
+        hand = socketCom.THK_Hand_Controller()
+        status = hand.connect(host, port)
+
+        if status[0] == 1:
+            hand.Specific_Rotation(pos, speed, finger_id)
+            hand.close()
+        else:
+            print("Check hand connection")
+        return
+
+    def Finger_3_Joint_2(self):
+        host, port = self.Connect_2_Hand()
+        speed = 10
+        finger_id = [5]
+        pos = self.Finger_3_current_status[1]
+        hand = socketCom.THK_Hand_Controller()
+        status = hand.connect(host, port)
+
+        if status[0] == 1:
+            hand.Specific_Linear(pos, speed, finger_id)
+            hand.close()
+        else:
+            print("Check hand connection")
+        return
+
+    def Finger_3_Joint_3(self):
+        host, port = self.Connect_2_Hand()
+        speed = 10
+        finger_id = [6]
+        pos = self.Finger_3_current_status[2]
+        hand = socketCom.THK_Hand_Controller()
+        status = hand.connect(host, port)
+
+        if status[0] == 1:
+            hand.Specific_Grip(pos, speed, finger_id)
+            hand.close()
+        else:
+            print("Check hand connection")
+        return
+
+    def Finger_4_Joint_1(self):
+        host, port = self.Connect_2_Hand()
+        speed = 10
+        finger_id = [12]
+        pos = self.Finger_4_current_status[0]
+        hand = socketCom.THK_Hand_Controller()
+        status = hand.connect(host, port)
+
+        if status[0] == 1:
+            hand.Specific_Rotation(pos, speed, finger_id)
+            hand.close()
+        else:
+            print("Check hand connection")
+        return
+
+    def Finger_4_Joint_2(self):
+        host, port = self.Connect_2_Hand()
+        speed = 10
+        finger_id = [7]
+        pos = self.Finger_4_current_status[1]
+        hand = socketCom.THK_Hand_Controller()
+        status = hand.connect(host, port)
+
+        if status[0] == 1:
+            hand.Specific_Linear(pos, speed, finger_id)
+            hand.close()
+        else:
+            print("Check hand connection")
+        return
+
+    def Finger_4_Joint_3(self):
+        host, port = self.Connect_2_Hand()
+        speed = 10
+        finger_id = [8]
+        pos = self.Finger_4_current_status[2]
+        hand = socketCom.THK_Hand_Controller()
+        status = hand.connect(host, port)
+
+        if status[0] == 1:
+            hand.Specific_Grip(pos, speed, finger_id)
+            hand.close()
+        else:
+            print("Check hand connection")
+        return
+
+    def Finger_1_joint_1_Pos(self):
+        lower_limit = -800
+        upper_limit = 800
+        current_value = int(self.Finger_1_current_status[0])
+        print(current_value)
+        new_value = current_value + int(self.step)
+        if new_value > upper_limit:
+           self.Finger_1_current_status[0] = upper_limit
+        elif new_value < lower_limit:
+            self.Finger_1_current_status[0] = lower_limit
+        else:
+            self.Finger_1_current_status[0] = new_value
+        self.Finger_1_Joint_1()
+
+        return self.Finger_1_current_status[0]
+
+    def Finger_1_joint_2_Pos(self):
+        lower_limit = -700
+        upper_limit = 150
+        current_value = int(self.Finger_1_current_status[1])
+        print(current_value)
+        new_value = current_value + int(self.step)
+        if new_value > upper_limit:
+            self.Finger_1_current_status[1] = upper_limit
+        elif new_value < lower_limit:
+            self.Finger_1_current_status[1] = lower_limit
+        else:
+            self.Finger_1_current_status[1] = new_value
+        self.Finger_1_Joint_2()
+
+        return self.Finger_1_current_status[1]
+
+    def Finger_1_joint_3_Pos(self):
+        lower_limit = -500
+        upper_limit = 100
+        current_value = int(self.Finger_1_current_status[2])
+        print(current_value)
+        new_value = current_value + int(self.step)
+        if new_value > upper_limit:
+            self.Finger_1_current_status[2] = upper_limit
+        elif new_value < lower_limit:
+            self.Finger_1_current_status[2] = lower_limit
+        else:
+            self.Finger_1_current_status[2] = new_value
+        self.Finger_1_Joint_3()
+
+        return self.Finger_1_current_status[2]
+
+    def Finger_1_joint_1_Neg(self):
+        lower_limit = -800
+        upper_limit = 800
+        current_value = int(self.Finger_1_current_status[0])
+        print(current_value)
+        new_value = current_value - int(self.step)
+        if new_value > upper_limit:
+           self.Finger_1_current_status[0] = upper_limit
+        elif new_value < lower_limit:
+            self.Finger_1_current_status[0] = lower_limit
+        else:
+            self.Finger_1_current_status[0] = new_value
+        self.Finger_1_Joint_1()
+        return self.Finger_1_current_status[0]
+
+    def Finger_1_joint_2_Neg(self):
+        lower_limit = -700
+        upper_limit = 150
+        current_value = int(self.Finger_1_current_status[1])
+        print(current_value)
+        new_value = current_value - int(self.step)
+        if new_value > upper_limit:
+            self.Finger_1_current_status[1] = upper_limit
+        elif new_value < lower_limit:
+            self.Finger_1_current_status[1] = lower_limit
+        else:
+            self.Finger_1_current_status[1] = new_value
+        self.Finger_1_Joint_2()
+
+        return self.Finger_1_current_status[1]
+
+    def Finger_1_joint_3_Neg(self):
+        lower_limit = -500
+        upper_limit = 100
+        current_value = int(self.Finger_1_current_status[2])
+        print(current_value)
+        new_value = current_value - int(self.step)
+        if new_value > upper_limit:
+            self.Finger_1_current_status[2] = upper_limit
+        elif new_value < lower_limit:
+            self.Finger_1_current_status[2] = lower_limit
+        else:
+            self.Finger_1_current_status[2] = new_value
+        self.Finger_1_Joint_3()
+
+        return self.Finger_1_current_status[2]
+
+
+    def Finger_2_joint_1_Pos(self):
+        lower_limit = -800
+        upper_limit = 800
+        current_value = int(self.Finger_2_current_status[0])
+        print(current_value)
+        new_value = current_value + int(self.step)
+        if new_value > upper_limit:
+           self.Finger_2_current_status[0] = upper_limit
+        elif new_value < lower_limit:
+            self.Finger_2_current_status[0] = lower_limit
+        else:
+            self.Finger_2_current_status[0] = new_value
+        self.Finger_2_Joint_1()
+
+        return self.Finger_2_current_status[0]
+
+    def Finger_2_joint_2_Pos(self):
+        lower_limit = -700
+        upper_limit = 150
+        current_value = int(self.Finger_2_current_status[1])
+
+        new_value = current_value + int(self.step)
+        if new_value > upper_limit:
+            self.Finger_2_current_status[1] = upper_limit
+        elif new_value < lower_limit:
+            self.Finger_2_current_status[1] = lower_limit
+        else:
+            self.Finger_2_current_status[1] = new_value
+        self.Finger_2_Joint_2()
+
+        return print(self.Finger_2_current_status[1])
+
+    def Finger_2_joint_3_Pos(self):
+        lower_limit = -500
+        upper_limit = 100
+        current_value = int(self.Finger_2_current_status[2])
+        print(current_value)
+        new_value = current_value + int(self.step)
+        if new_value > upper_limit:
+            self.Finger_2_current_status[2] = upper_limit
+        elif new_value < lower_limit:
+            self.Finger_2_current_status[2] = lower_limit
+        else:
+            self.Finger_2_current_status[2] = new_value
+        self.Finger_2_Joint_3()
+
+        return self.Finger_2_current_status[2]
+
+    def Finger_2_joint_1_Neg(self):
+        lower_limit = -800
+        upper_limit = 800
+        current_value = int(self.Finger_2_current_status[0])
+        print(current_value)
+        new_value = current_value - int(self.step)
+        if new_value > upper_limit:
+            self.Finger_2_current_status[0] = upper_limit
+        elif new_value < lower_limit:
+            self.Finger_2_current_status[0] = lower_limit
+        else:
+            self.Finger_2_current_status[0] = new_value
+        self.Finger_2_Joint_1()
+
+        return self.Finger_2_current_status[0]
+
+    def Finger_2_joint_2_Neg(self):
+        lower_limit = -700
+        upper_limit = 150
+        current_value = int(self.Finger_2_current_status[1])
+        print(current_value)
+        new_value = current_value - int(self.step)
+        if new_value > upper_limit:
+            self.Finger_2_current_status[1] = upper_limit
+        elif new_value < lower_limit:
+            self.Finger_2_current_status[1] = lower_limit
+        else:
+            self.Finger_2_current_status[1] = new_value
+        self.Finger_2_Joint_2()
+
+        return self.Finger_2_current_status[1]
+
+    def Finger_2_joint_3_Neg(self):
+        lower_limit = -500
+        upper_limit = 100
+        current_value = int(self.Finger_2_current_status[2])
+        print(current_value)
+        new_value = current_value - int(self.step)
+        if new_value > upper_limit:
+            self.Finger_2_current_status[2] = upper_limit
+        elif new_value < lower_limit:
+            self.Finger_2_current_status[2] = lower_limit
+        else:
+            self.Finger_2_current_status[2] = new_value
+        self.Finger_2_Joint_3()
+
+        return self.Finger_2_current_status[2]
+
+    def Finger_3_joint_1_Pos(self):
+        lower_limit = -800
+        upper_limit = 800
+        current_value = int(self.Finger_3_current_status[0])
+        print(current_value)
+        new_value = current_value + int(self.step)
+        if new_value > upper_limit:
+            self.Finger_3_current_status[0] = upper_limit
+        elif new_value < lower_limit:
+            self.Finger_3_current_status[0] = lower_limit
+        else:
+            self.Finger_3_current_status[0] = new_value
+        self.Finger_3_Joint_1()
+
+        return self.Finger_3_current_status[0]
+
+    def Finger_3_joint_2_Pos(self):
+        lower_limit = -700
+        upper_limit = 150
+        current_value = int(self.Finger_3_current_status[1])
+        print(current_value)
+        new_value = current_value + int(self.step)
+        if new_value > upper_limit:
+            self.Finger_3_current_status[1] = upper_limit
+        elif new_value < lower_limit:
+            self.Finger_3_current_status[1] = lower_limit
+        else:
+            self.Finger_3_current_status[1] = new_value
+        self.Finger_3_Joint_2()
+
+        return self.Finger_3_current_status[1]
+
+    def Finger_3_joint_3_Pos(self):
+        lower_limit = -500
+        upper_limit = 100
+        current_value = int(self.Finger_3_current_status[2])
+        print(current_value)
+        new_value = current_value + int(self.step)
+        if new_value > upper_limit:
+            self.Finger_3_current_status[2] = upper_limit
+        elif new_value < lower_limit:
+            self.Finger_3_current_status[2] = lower_limit
+        else:
+            self.Finger_3_current_status[2] = new_value
+        self.Finger_3_Joint_3()
+
+        return self.Finger_3_current_status[2]
+
+    def Finger_3_joint_1_Neg(self):
+        lower_limit = -800
+        upper_limit = 800
+        current_value = int(self.Finger_3_current_status[0])
+        print(current_value)
+        new_value = current_value - int(self.step)
+        if new_value > upper_limit:
+            self.Finger_3_current_status[0] = upper_limit
+        elif new_value < lower_limit:
+            self.Finger_3_current_status[0] = lower_limit
+        else:
+            self.Finger_3_current_status[0] = new_value
+        self.Finger_3_Joint_1()
+
+        return self.Finger_3_current_status[0]
+
+    def Finger_3_joint_2_Neg(self):
+        lower_limit = -700
+        upper_limit = 150
+        current_value = int(self.Finger_3_current_status[1])
+        print(current_value)
+        new_value = current_value - int(self.step)
+        if new_value > upper_limit:
+            self.Finger_3_current_status[1] = upper_limit
+        elif new_value < lower_limit:
+            self.Finger_3_current_status[1] = lower_limit
+        else:
+            self.Finger_3_current_status[1] = new_value
+        self.Finger_3_Joint_2()
+
+        return self.Finger_3_current_status[1]
+
+    def Finger_3_joint_3_Neg(self):
+        lower_limit = -500
+        upper_limit = 100
+        current_value = int(self.Finger_3_current_status[2])
+        print(current_value)
+        new_value = current_value - int(self.step)
+        if new_value > upper_limit:
+            self.Finger_3_current_status[2] = upper_limit
+        elif new_value < lower_limit:
+            self.Finger_3_current_status[2] = lower_limit
+        else:
+            self.Finger_3_current_status[2] = new_value
+        self.Finger_3_Joint_3()
+
+        return self.Finger_3_current_status[2]
+
+    def Finger_4_joint_1_Pos(self):
+        lower_limit = -800
+        upper_limit = 800
+        current_value = int(self.Finger_4_current_status[0])
+        print(current_value)
+        new_value = current_value + int(self.step)
+        if new_value > upper_limit:
+            self.Finger_4_current_status[0] = upper_limit
+        elif new_value < lower_limit:
+            self.Finger_4_current_status[0] = lower_limit
+        else:
+            self.Finger_4_current_status[0] = new_value
+        self.Finger_4_Joint_1()
+
+        return self.Finger_4_current_status[0]
+
+    def Finger_4_joint_2_Pos(self):
+        lower_limit = -700
+        upper_limit = 150
+        current_value = int(self.Finger_4_current_status[1])
+        print(current_value)
+        new_value = current_value + int(self.step)
+        if new_value > upper_limit:
+            self.Finger_4_current_status[1] = upper_limit
+        elif new_value < lower_limit:
+            self.Finger_4_current_status[1] = lower_limit
+        else:
+            self.Finger_4_current_status[1] = new_value
+        self.Finger_4_Joint_2()
+
+        return self.Finger_4_current_status[1]
+
+    def Finger_4_joint_3_Pos(self):
+        lower_limit = -500
+        upper_limit = 100
+        current_value = int(self.Finger_4_current_status[2])
+        print(current_value)
+        new_value = current_value + int(self.step)
+        if new_value > upper_limit:
+            self.Finger_4_current_status[2] = upper_limit
+        elif new_value < lower_limit:
+            self.Finger_4_current_status[2] = lower_limit
+        else:
+            self.Finger_4_current_status[2] = new_value
+        self.Finger_4_Joint_3()
+
+        return self.Finger_4_current_status[2]
+
+    def Finger_4_joint_1_Neg(self):
+        lower_limit = -800
+        upper_limit = 800
+        current_value = int(self.Finger_4_current_status[0])
+        print(current_value)
+        new_value = current_value - int(self.step)
+        if new_value > upper_limit:
+            self.Finger_4_current_status[0] = upper_limit
+        elif new_value < lower_limit:
+            self.Finger_4_current_status[0] = lower_limit
+        else:
+            self.Finger_4_current_status[0] = new_value
+        self.Finger_4_Joint_1()
+
+        return self.Finger_4_current_status[0]
+
+    def Finger_4_joint_2_Neg(self):
+        lower_limit = -700
+        upper_limit = 150
+        current_value = int(self.Finger_4_current_status[1])
+        print(current_value)
+        new_value = current_value - int(self.step)
+        if new_value > upper_limit:
+            self.Finger_4_current_status[1] = upper_limit
+        elif new_value < lower_limit:
+            self.Finger_4_current_status[1] = lower_limit
+        else:
+            self.Finger_4_current_status[1] = new_value
+        self.Finger_4_Joint_2()
+
+        return self.Finger_4_current_status[1]
+
+    def Finger_4_joint_3_Neg(self):
+        lower_limit = -500
+        upper_limit = 100
+        current_value = int(self.Finger_4_current_status[2])
+        print(current_value)
+        new_value = current_value - int(self.step)
+        if new_value > upper_limit:
+            self.Finger_4_current_status[2] = upper_limit
+        elif new_value < lower_limit:
+            self.Finger_4_current_status[2] = lower_limit
+        else:
+            self.Finger_4_current_status[2] = new_value
+        self.Finger_4_Joint_3()
+
+        return self.Finger_4_current_status[2]
+
+    def save_to_csv(self):
+        # Open a file dialog to select the save location
+
+        options = QFileDialog.Options()
+        file_name, _ = QFileDialog.getSaveFileName(self, "Save CSV File", "", "CSV Files (*.csv);;All Files (*)",
+                                                   options=options)
+        if file_name:
+            merged_list = self.Finger_1_current_status + self.Finger_2_current_status + self.Finger_3_current_status + self.Finger_4_current_status
+            merged_list = np.array(merged_list)
+            print(merged_list)
+
+            # Save data to the CSV file
+            try:
+                np.savetxt(file_name, [merged_list], delimiter=',', fmt='%d')
+                """
+                with open(file_name, mode='w', newline='') as file:
+                    writer = csv.writer(file)
+                    for item in merged_list:
+                        writer.writerow([item])  # Write each item as a single-element row
+                """
+                print(f"Data successfully saved to {file_name}")
+
+            except Exception as e:
+                print(f"Error saving data to CSV: {e}")
+
+
+
+
+
+
+
+    def itemDetection(self,item):
+        print("started.............")
+        items = ["Pet-bottle","Cardboard","Wine-glass","Sponge"]
+         # Flag to indicate if item was found
         item_found = False
 
         detected_item = " "
@@ -162,18 +861,44 @@ class MainForm(qtw.QWidget, Ui_MainForm):
         # Check the flag and print the appropriate message
         if item_found:
             print(f"'{detected_item}' was found in the list.")
-            self.lb_itemdetected.setText(detected_item)
-            #self.cb_items.addItem(detected_item)
+
         else:
             print(f"'{detected_item}' was not found in the list.")
-
-        return
-    def detectionCheck(self, image):
+        return detected_item
+    def modelPrediction(self,detection_dir):
+        self.delete_files_and_folders(detection_dir)
         model = YOLO("./Model/best.pt")
-        results = model('./images_new/rgb_image_1.jpg', save=True)
-        image = "/runs/segment/predict4/rgb_image_1.jpg"
-        self.lb_detection.setFixedSize(360, 360)
-        self.lb_detection.setPixmap(QPixmap.fromImage(image))
+        results = model('./images_new/rgb_image.jpg', save=True,conf=0.85, verbose=False)
+        probs = results[0].boxes.conf.numpy()
+        prob = np.round(probs[0], 2)
+
+        object_name = ""
+        for result in results:
+            if result.boxes:
+                box = result.boxes[0]
+                class_id = int(box.cls)
+                object_name = model.names[class_id]
+        return results, object_name, prob
+
+    def detectionCheck(self):
+        item = "Pet-bottle"
+        detection_dir = './runs/'
+        results, object_name, prob = self.modelPrediction(detection_dir)
+        #print(prob)
+
+        #detected_item = self.itemDetection(item)
+        self.lb_itemdetected.setText(object_name)
+        self.lb_accuracy.setText(str(prob))
+        seg_image = "./runs/segment/predict/rgb_image.jpg"
+        frame = cv2.imread(seg_image)
+
+        # Check if the image was loaded successfully
+        if frame is None:
+            raise ValueError(f"Failed to load image from {seg_image}")
+
+        # Convert the color from BGR to RGB
+        frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        self.UpdateDetection(frame)
 
         return
 

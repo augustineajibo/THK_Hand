@@ -41,12 +41,30 @@ def draw_figure(canvas, figure, loc=(0, 0)):
 def figure_draw_1(fig2,ax2,mean,fig_agg2,j,xax):
     ax2.cla()
     ax2.grid()
-    ax2.plot(xax, mean, color='blue', label="average")
+    colors = ['r', 'g', 'b', 'orange']
+    """
+    colors = ['r','g','b','orange']
+    for i in range(len(colors)):
+        ax2.plot(xax[i:i + 1], mean[i:i + 1], color=colors[i], marker='x', label=f"average {i + 1}")
+        ax2.set_xlabel("time")
+        ax2.set_ylabel("sensor average")
+        ax2.set_xlim(left=max(0, j - 50), right=j + 50)
+        ax2.set_ylim(ymin=0, ymax=75520)
+        ax2.legend(loc="upper left")
+
+    """
+    for i in range(len(mean) - 1):
+
+        ax2.plot(xax[i:i + 2], mean[i:i + 2], color = colors[i % len(colors)], marker='o', label=f"average {i + 1}" if i == 0 else "")
+    #ax2.plot(xax, mean, color='orange', label="average")
     ax2.set_xlabel("time")
     ax2.set_ylabel("sensor average")
     ax2.set_xlim(left=max(0, j - 50), right=j + 50)
-    ax2.set_ylim(ymin=0, ymax=300)
+    ax2.set_ylim(ymin=0, ymax=75520)
+
+
     ax2.legend(loc="upper left")
+
     return (fig_agg2)
 
 
@@ -97,10 +115,9 @@ def make_cube_ulti_new_oof(ax,data, fig_agg):
     return(fig_agg)
 
 
-
-
-
 def Liniar_display():
+    data = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    sensor_value = [0x80, 0x00, 0x00, 0x00]
     layout = [[sg.Canvas(key='-CANVAS-2')]]
     gui = sg.Window(title="Live Feed figure", layout=layout, size=(1500, 900), finalize=True,
                     resizable=True, element_justification='c')
@@ -111,15 +128,45 @@ def Liniar_display():
     fig2.set_size_inches(15, 6)
     ax2.grid()
     fig_agg2 = draw_figure(canvas2, fig2)
-    mean, xax, j = [], [], 0
-    while True:
+    mean,xax, j = [],[], 0
 
+    while True:
+        group_size = 4
         (event, values) = gui.read(timeout=0)
-        for i in range(0, len(result)):
-            data[i] = result[i] / 256
-        print(data)
+        hand = THK_Hand()
+        result = hand.get_data(sensor_value)
+        new_result = []
+
+        for i in range(0, len(result), group_size):
+            group = result[i:i + group_size]
+            group_mean = np.mean(group)
+            new_result.append(group_mean)
+
+        mean.append(new_result)
+        #print(mean)
+        j = j + 1
+        xax.append(j)
+        #print("J: ", j)
+        #print("XAX: ", xax)
+        fig_agg2 = figure_draw_1(fig2, ax2, mean, fig_agg2, j, xax)
+        fig_agg2.draw()
 
         """
+        #fig_agg2 = figure_draw_1(fig2, ax2, mean, fig_agg2, j, xax)
+        #fig_agg2.draw()
+
+        #for i in range(0, len(result)):
+            #data[i] = result[i]
+        #print(data)
+        #for i in range(0, len(data), group_size):
+            #group = data[i:i + group_size]
+            #group_mean = np.mean(group)
+            #mean.append(group_mean)
+
+        #print("Average:", mean)
+        #print("J: ", j)
+        #print("XAX: ", xax)
+        
         mean.append(Get_Sensor_values_degital(PORT))
         j = j + 1
         xax.append(j)
@@ -134,7 +181,6 @@ def Liniar_display():
 
 
 def three_D_display():
-    data1 = [0, 0, 0, 0, 0, 0, 0, 0]
     data = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     sensor_value = [0x80, 0x00, 0x00, 0x00]
     layout = [[sg.Canvas(key='-CANVAS-')]]
@@ -155,7 +201,7 @@ def three_D_display():
                 #print(len(result))
 
                 for i in range(0, len(result)):
-                    data[i] = result[i]/256
+                    data[i] = result[i]
                 print(data)
                 fig_agg = make_cube_ulti_new_oof(ax, data, fig_agg, )
                 fig_agg.draw()

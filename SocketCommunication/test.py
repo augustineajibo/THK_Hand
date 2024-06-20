@@ -1,18 +1,30 @@
-import socket
-# Create a socket object
-s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-# Define the host and port you want to connect to
-host = '192.168.30.200'
-port = 1024
-# Connect to the server
-s.connect((host, port))
+import os
+import shutil
+def delete_files_and_folders( detection_dir):
+    print(detection_dir)
+    # Ensure the directory is a valid path
+    if not isinstance(detection_dir, (str, bytes, os.PathLike)):
+        raise TypeError(f"Expected str, bytes, os.PathLike or None, but got {type(detection_dir).__name__}")
 
-# Send data to the server
-s.send(b'\x00\x01\x00') #return all finger to original/default position
-#s.send(b'\x00\x01\x00')
+    # Check if the directory exists
+    if not os.path.exists(detection_dir):
+        print(f"The directory {detection_dir} does not exist.")
+        return
 
-# Receive data from the server
-data = s.recv(1024)
-print('Received:', data.decode('utf-8'))
-# Close the socket connection
-s.close()
+    # Loop through all the items in the directory
+    for item in os.listdir(detection_dir):
+        item_path = os.path.join(detection_dir, item)
+
+        # If the item is a file, delete it
+        if os.path.isfile(item_path) or os.path.islink(item_path):
+            os.unlink(item_path)
+            print(f"Deleted file: {item_path}")
+
+        # If the item is a directory, delete it and its contents
+        elif os.path.isdir(item_path):
+            shutil.rmtree(item_path)
+            print(f"Deleted folder: {item_path}")
+
+if __name__ == "__main__":
+    detection_dir = './runs/'
+    delete_files_and_folders(detection_dir)

@@ -9,7 +9,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1323</width>
+    <width>1613</width>
     <height>860</height>
    </rect>
   </property>
@@ -301,7 +301,7 @@ border-top-color: rgb(186, 186, 186);</string>
                   <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
                  </property>
                  <property name="readOnly">
-                  <bool>true</bool>
+                  <bool>false</bool>
                  </property>
                  <property name="placeholderText">
                   <string>192.168.30.200</string>
@@ -331,7 +331,7 @@ border-top-color: rgb(186, 186, 186);</string>
                   <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
                  </property>
                  <property name="readOnly">
-                  <bool>true</bool>
+                  <bool>false</bool>
                  </property>
                  <property name="placeholderText">
                   <string>1024</string>
@@ -620,6 +620,9 @@ background-color: rgb(255, 0, 0);</string>
          </item>
          <item>
           <widget class="QFrame" name="frame_6">
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(52, 52, 52);</string>
+           </property>
            <property name="frameShape">
             <enum>QFrame::StyledPanel</enum>
            </property>
@@ -630,7 +633,7 @@ background-color: rgb(255, 0, 0);</string>
             <item>
              <widget class="QLabel" name="lb_rgb">
               <property name="styleSheet">
-               <string notr="true">background-color: rgb(255, 255, 255);</string>
+               <string notr="true">background-color: rgb(243, 243, 243);</string>
               </property>
               <property name="text">
                <string/>
@@ -640,11 +643,11 @@ background-color: rgb(255, 0, 0);</string>
             <item>
              <widget class="Line" name="line_4">
               <property name="styleSheet">
-               <string notr="true">color: rgb(50, 50, 50);
-background-color: rgb(72, 72, 72);</string>
+               <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(255, 255, 255);</string>
               </property>
               <property name="lineWidth">
-               <number>2</number>
+               <number>4</number>
               </property>
               <property name="orientation">
                <enum>Qt::Vertical</enum>
@@ -743,6 +746,9 @@ background-color: rgb(72, 72, 72);</string>
             </item>
             <item>
              <widget class="QFrame" name="frame_32">
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(225, 225, 225);</string>
+              </property>
               <property name="frameShape">
                <enum>QFrame::StyledPanel</enum>
               </property>
@@ -755,8 +761,11 @@ background-color: rgb(72, 72, 72);</string>
                  <property name="maximumSize">
                   <size>
                    <width>16777215</width>
-                   <height>40</height>
+                   <height>50</height>
                   </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">background-color: rgb(199, 199, 199);</string>
                  </property>
                  <property name="frameShape">
                   <enum>QFrame::StyledPanel</enum>
@@ -773,7 +782,7 @@ background-color: rgb(72, 72, 72);</string>
                      </font>
                     </property>
                     <property name="text">
-                     <string>Detected Item:</string>
+                     <string>Detected Object:</string>
                     </property>
                    </widget>
                   </item>
@@ -781,7 +790,7 @@ background-color: rgb(72, 72, 72);</string>
                    <widget class="QLabel" name="lb_itemdetected">
                     <property name="font">
                      <font>
-                      <pointsize>12</pointsize>
+                      <pointsize>14</pointsize>
                      </font>
                     </property>
                     <property name="styleSheet">
@@ -803,8 +812,11 @@ background-color: rgb(72, 72, 72);</string>
                  <property name="maximumSize">
                   <size>
                    <width>16777215</width>
-                   <height>40</height>
+                   <height>50</height>
                   </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">background-color: rgb(199, 199, 199);</string>
                  </property>
                  <property name="frameShape">
                   <enum>QFrame::StyledPanel</enum>
@@ -829,7 +841,7 @@ background-color: rgb(72, 72, 72);</string>
                    <widget class="QLabel" name="lb_accuracy">
                     <property name="font">
                      <font>
-                      <pointsize>12</pointsize>
+                      <pointsize>14</pointsize>
                      </font>
                     </property>
                     <property name="styleSheet">
@@ -837,6 +849,9 @@ background-color: rgb(72, 72, 72);</string>
                     </property>
                     <property name="text">
                      <string/>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
                     </property>
                    </widget>
                   </item>
@@ -848,8 +863,11 @@ background-color: rgb(72, 72, 72);</string>
                  <property name="maximumSize">
                   <size>
                    <width>16777215</width>
-                   <height>40</height>
+                   <height>50</height>
                   </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">background-color: rgb(199, 199, 199);</string>
                  </property>
                  <property name="frameShape">
                   <enum>QFrame::StyledPanel</enum>
@@ -868,13 +886,16 @@ background-color: rgb(72, 72, 72);</string>
                     <property name="text">
                      <string>X</string>
                     </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
                    </widget>
                   </item>
                   <item>
                    <widget class="QLabel" name="lb_x">
                     <property name="font">
                      <font>
-                      <pointsize>12</pointsize>
+                      <pointsize>14</pointsize>
                      </font>
                     </property>
                     <property name="styleSheet">
@@ -882,6 +903,9 @@ background-color: rgb(72, 72, 72);</string>
                     </property>
                     <property name="text">
                      <string/>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
                     </property>
                    </widget>
                   </item>
@@ -893,8 +917,11 @@ background-color: rgb(72, 72, 72);</string>
                  <property name="maximumSize">
                   <size>
                    <width>16777215</width>
-                   <height>40</height>
+                   <height>50</height>
                   </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">background-color: rgb(199, 199, 199);</string>
                  </property>
                  <property name="frameShape">
                   <enum>QFrame::StyledPanel</enum>
@@ -913,13 +940,16 @@ background-color: rgb(72, 72, 72);</string>
                     <property name="text">
                      <string>Y</string>
                     </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
                    </widget>
                   </item>
                   <item>
                    <widget class="QLabel" name="lb_y">
                     <property name="font">
                      <font>
-                      <pointsize>12</pointsize>
+                      <pointsize>14</pointsize>
                      </font>
                     </property>
                     <property name="styleSheet">
@@ -927,6 +957,9 @@ background-color: rgb(72, 72, 72);</string>
                     </property>
                     <property name="text">
                      <string/>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
                     </property>
                    </widget>
                   </item>
@@ -938,8 +971,11 @@ background-color: rgb(72, 72, 72);</string>
                  <property name="maximumSize">
                   <size>
                    <width>16777215</width>
-                   <height>40</height>
+                   <height>50</height>
                   </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">background-color: rgb(199, 199, 199);</string>
                  </property>
                  <property name="frameShape">
                   <enum>QFrame::StyledPanel</enum>
@@ -958,13 +994,16 @@ background-color: rgb(72, 72, 72);</string>
                     <property name="text">
                      <string>Z</string>
                     </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
                    </widget>
                   </item>
                   <item>
                    <widget class="QLabel" name="lb_z">
                     <property name="font">
                      <font>
-                      <pointsize>12</pointsize>
+                      <pointsize>14</pointsize>
                      </font>
                     </property>
                     <property name="styleSheet">
@@ -973,12 +1012,28 @@ background-color: rgb(72, 72, 72);</string>
                     <property name="text">
                      <string/>
                     </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
                    </widget>
                   </item>
                  </layout>
                 </widget>
                </item>
               </layout>
+             </widget>
+            </item>
+            <item>
+             <widget class="QFrame" name="frame_38">
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(84, 84, 84);</string>
+              </property>
+              <property name="frameShape">
+               <enum>QFrame::StyledPanel</enum>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Raised</enum>
+              </property>
              </widget>
             </item>
            </layout>
@@ -1023,6 +1078,18 @@ background-color: rgb(72, 72, 72);</string>
               </property>
               <property name="text">
                <string>Capture</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="pb_detect">
+              <property name="font">
+               <font>
+                <pointsize>14</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>Detect</string>
               </property>
              </widget>
             </item>
@@ -1100,6 +1167,12 @@ background-color: rgb(72, 72, 72);</string>
          </item>
          <item>
           <widget class="QFrame" name="frame_17">
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>100</height>
+            </size>
+           </property>
            <property name="styleSheet">
             <string notr="true">background-color: rgb(195, 195, 195);</string>
            </property>
@@ -1112,6 +1185,12 @@ background-color: rgb(72, 72, 72);</string>
            <layout class="QHBoxLayout" name="horizontalLayout_10">
             <item>
              <widget class="QFrame" name="frame_18">
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>90</height>
+               </size>
+              </property>
               <property name="styleSheet">
                <string notr="true">background-color: rgb(136, 136, 136);</string>
               </property>
@@ -1123,7 +1202,7 @@ background-color: rgb(72, 72, 72);</string>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_10">
                <item>
-                <widget class="QPushButton" name="pushButton_5">
+                <widget class="QPushButton" name="pb_f1_joint1_pos">
                  <property name="maximumSize">
                   <size>
                    <width>100</width>
@@ -1132,7 +1211,7 @@ background-color: rgb(72, 72, 72);</string>
                  </property>
                  <property name="font">
                   <font>
-                   <pointsize>22</pointsize>
+                   <pointsize>18</pointsize>
                   </font>
                  </property>
                  <property name="styleSheet">
@@ -1148,7 +1227,7 @@ color: rgb(25, 25, 25);</string>
                 </widget>
                </item>
                <item>
-                <widget class="QPushButton" name="pushButton_6">
+                <widget class="QPushButton" name="pb_f1_joint1_neg">
                  <property name="maximumSize">
                   <size>
                    <width>100</width>
@@ -1157,7 +1236,7 @@ color: rgb(25, 25, 25);</string>
                  </property>
                  <property name="font">
                   <font>
-                   <pointsize>22</pointsize>
+                   <pointsize>18</pointsize>
                   </font>
                  </property>
                  <property name="styleSheet">
@@ -1177,6 +1256,12 @@ color: rgb(25, 25, 25);</string>
             </item>
             <item>
              <widget class="QFrame" name="frame_19">
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>90</height>
+               </size>
+              </property>
               <property name="styleSheet">
                <string notr="true">background-color: rgb(136, 136, 136);</string>
               </property>
@@ -1188,7 +1273,7 @@ color: rgb(25, 25, 25);</string>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_11">
                <item>
-                <widget class="QPushButton" name="pushButton_7">
+                <widget class="QPushButton" name="pb_f1_joint2_pos">
                  <property name="maximumSize">
                   <size>
                    <width>100</width>
@@ -1197,7 +1282,7 @@ color: rgb(25, 25, 25);</string>
                  </property>
                  <property name="font">
                   <font>
-                   <pointsize>22</pointsize>
+                   <pointsize>18</pointsize>
                   </font>
                  </property>
                  <property name="styleSheet">
@@ -1213,7 +1298,7 @@ color: rgb(25, 25, 25);</string>
                 </widget>
                </item>
                <item>
-                <widget class="QPushButton" name="pushButton_8">
+                <widget class="QPushButton" name="pb_f1_joint2_neg">
                  <property name="maximumSize">
                   <size>
                    <width>100</width>
@@ -1222,7 +1307,7 @@ color: rgb(25, 25, 25);</string>
                  </property>
                  <property name="font">
                   <font>
-                   <pointsize>22</pointsize>
+                   <pointsize>18</pointsize>
                   </font>
                  </property>
                  <property name="styleSheet">
@@ -1242,6 +1327,12 @@ color: rgb(25, 25, 25);</string>
             </item>
             <item>
              <widget class="QFrame" name="frame_20">
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>90</height>
+               </size>
+              </property>
               <property name="styleSheet">
                <string notr="true">background-color: rgb(136, 136, 136);</string>
               </property>
@@ -1253,7 +1344,7 @@ color: rgb(25, 25, 25);</string>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_12">
                <item>
-                <widget class="QPushButton" name="pushButton_9">
+                <widget class="QPushButton" name="pb_f1_joint3_pos">
                  <property name="maximumSize">
                   <size>
                    <width>100</width>
@@ -1262,7 +1353,7 @@ color: rgb(25, 25, 25);</string>
                  </property>
                  <property name="font">
                   <font>
-                   <pointsize>22</pointsize>
+                   <pointsize>18</pointsize>
                   </font>
                  </property>
                  <property name="styleSheet">
@@ -1278,7 +1369,7 @@ color: rgb(25, 25, 25);</string>
                 </widget>
                </item>
                <item>
-                <widget class="QPushButton" name="pushButton_10">
+                <widget class="QPushButton" name="pb_f1_joint3_neg">
                  <property name="maximumSize">
                   <size>
                    <width>100</width>
@@ -1287,7 +1378,7 @@ color: rgb(25, 25, 25);</string>
                  </property>
                  <property name="font">
                   <font>
-                   <pointsize>22</pointsize>
+                   <pointsize>18</pointsize>
                   </font>
                  </property>
                  <property name="styleSheet">
@@ -1310,6 +1401,12 @@ color: rgb(25, 25, 25);</string>
          </item>
          <item>
           <widget class="QFrame" name="frame_21">
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>100</height>
+            </size>
+           </property>
            <property name="styleSheet">
             <string notr="true">background-color: rgb(195, 195, 195);</string>
            </property>
@@ -1322,6 +1419,12 @@ color: rgb(25, 25, 25);</string>
            <layout class="QHBoxLayout" name="horizontalLayout_11">
             <item>
              <widget class="QFrame" name="frame_24">
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>90</height>
+               </size>
+              </property>
               <property name="styleSheet">
                <string notr="true">background-color: rgb(136, 136, 136);</string>
               </property>
@@ -1333,7 +1436,7 @@ color: rgb(25, 25, 25);</string>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_13">
                <item>
-                <widget class="QPushButton" name="pushButton_11">
+                <widget class="QPushButton" name="pb_f2_joint1_pos">
                  <property name="maximumSize">
                   <size>
                    <width>100</width>
@@ -1342,7 +1445,7 @@ color: rgb(25, 25, 25);</string>
                  </property>
                  <property name="font">
                   <font>
-                   <pointsize>22</pointsize>
+                   <pointsize>18</pointsize>
                   </font>
                  </property>
                  <property name="styleSheet">
@@ -1358,7 +1461,7 @@ color: rgb(25, 25, 25);</string>
                 </widget>
                </item>
                <item>
-                <widget class="QPushButton" name="pushButton_12">
+                <widget class="QPushButton" name="pb_f2_joint1_neg">
                  <property name="maximumSize">
                   <size>
                    <width>100</width>
@@ -1367,7 +1470,7 @@ color: rgb(25, 25, 25);</string>
                  </property>
                  <property name="font">
                   <font>
-                   <pointsize>22</pointsize>
+                   <pointsize>18</pointsize>
                   </font>
                  </property>
                  <property name="styleSheet">
@@ -1387,6 +1490,12 @@ color: rgb(25, 25, 25);</string>
             </item>
             <item>
              <widget class="QFrame" name="frame_23">
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>90</height>
+               </size>
+              </property>
               <property name="styleSheet">
                <string notr="true">background-color: rgb(136, 136, 136);</string>
               </property>
@@ -1398,7 +1507,7 @@ color: rgb(25, 25, 25);</string>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_14">
                <item>
-                <widget class="QPushButton" name="pushButton_13">
+                <widget class="QPushButton" name="pb_f2_joint2_pos">
                  <property name="maximumSize">
                   <size>
                    <width>100</width>
@@ -1407,7 +1516,7 @@ color: rgb(25, 25, 25);</string>
                  </property>
                  <property name="font">
                   <font>
-                   <pointsize>22</pointsize>
+                   <pointsize>18</pointsize>
                   </font>
                  </property>
                  <property name="styleSheet">
@@ -1423,7 +1532,7 @@ color: rgb(25, 25, 25);</string>
                 </widget>
                </item>
                <item>
-                <widget class="QPushButton" name="pushButton_14">
+                <widget class="QPushButton" name="pb_f2_joint2_neg">
                  <property name="maximumSize">
                   <size>
                    <width>100</width>
@@ -1432,7 +1541,7 @@ color: rgb(25, 25, 25);</string>
                  </property>
                  <property name="font">
                   <font>
-                   <pointsize>22</pointsize>
+                   <pointsize>18</pointsize>
                   </font>
                  </property>
                  <property name="styleSheet">
@@ -1452,6 +1561,12 @@ color: rgb(25, 25, 25);</string>
             </item>
             <item>
              <widget class="QFrame" name="frame_22">
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>90</height>
+               </size>
+              </property>
               <property name="styleSheet">
                <string notr="true">background-color: rgb(136, 136, 136);</string>
               </property>
@@ -1463,7 +1578,7 @@ color: rgb(25, 25, 25);</string>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_15">
                <item>
-                <widget class="QPushButton" name="pushButton_15">
+                <widget class="QPushButton" name="pb_f2_joint3_pos">
                  <property name="maximumSize">
                   <size>
                    <width>100</width>
@@ -1472,7 +1587,7 @@ color: rgb(25, 25, 25);</string>
                  </property>
                  <property name="font">
                   <font>
-                   <pointsize>22</pointsize>
+                   <pointsize>18</pointsize>
                   </font>
                  </property>
                  <property name="styleSheet">
@@ -1488,7 +1603,7 @@ color: rgb(25, 25, 25);</string>
                 </widget>
                </item>
                <item>
-                <widget class="QPushButton" name="pushButton_16">
+                <widget class="QPushButton" name="pb_f2_joint3_neg">
                  <property name="maximumSize">
                   <size>
                    <width>100</width>
@@ -1497,7 +1612,7 @@ color: rgb(25, 25, 25);</string>
                  </property>
                  <property name="font">
                   <font>
-                   <pointsize>22</pointsize>
+                   <pointsize>18</pointsize>
                   </font>
                  </property>
                  <property name="styleSheet">
@@ -1520,6 +1635,12 @@ color: rgb(25, 25, 25);</string>
          </item>
          <item>
           <widget class="QFrame" name="frame_25">
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>100</height>
+            </size>
+           </property>
            <property name="styleSheet">
             <string notr="true">background-color: rgb(195, 195, 195);</string>
            </property>
@@ -1532,6 +1653,12 @@ color: rgb(25, 25, 25);</string>
            <layout class="QHBoxLayout" name="horizontalLayout_12">
             <item>
              <widget class="QFrame" name="frame_28">
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>90</height>
+               </size>
+              </property>
               <property name="styleSheet">
                <string notr="true">background-color: rgb(136, 136, 136);</string>
               </property>
@@ -1543,7 +1670,7 @@ color: rgb(25, 25, 25);</string>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_16">
                <item>
-                <widget class="QPushButton" name="pushButton_17">
+                <widget class="QPushButton" name="pb_f3_joint1_pos">
                  <property name="maximumSize">
                   <size>
                    <width>100</width>
@@ -1552,7 +1679,7 @@ color: rgb(25, 25, 25);</string>
                  </property>
                  <property name="font">
                   <font>
-                   <pointsize>22</pointsize>
+                   <pointsize>18</pointsize>
                   </font>
                  </property>
                  <property name="styleSheet">
@@ -1568,7 +1695,7 @@ color: rgb(25, 25, 25);</string>
                 </widget>
                </item>
                <item>
-                <widget class="QPushButton" name="pushButton_18">
+                <widget class="QPushButton" name="pb_f3_joint1_neg">
                  <property name="maximumSize">
                   <size>
                    <width>100</width>
@@ -1577,7 +1704,7 @@ color: rgb(25, 25, 25);</string>
                  </property>
                  <property name="font">
                   <font>
-                   <pointsize>22</pointsize>
+                   <pointsize>18</pointsize>
                   </font>
                  </property>
                  <property name="styleSheet">
@@ -1597,6 +1724,12 @@ color: rgb(25, 25, 25);</string>
             </item>
             <item>
              <widget class="QFrame" name="frame_27">
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>90</height>
+               </size>
+              </property>
               <property name="styleSheet">
                <string notr="true">background-color: rgb(136, 136, 136);</string>
               </property>
@@ -1608,7 +1741,7 @@ color: rgb(25, 25, 25);</string>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_17">
                <item>
-                <widget class="QPushButton" name="pushButton_19">
+                <widget class="QPushButton" name="pb_f3_joint2_pos">
                  <property name="maximumSize">
                   <size>
                    <width>100</width>
@@ -1617,7 +1750,7 @@ color: rgb(25, 25, 25);</string>
                  </property>
                  <property name="font">
                   <font>
-                   <pointsize>22</pointsize>
+                   <pointsize>18</pointsize>
                   </font>
                  </property>
                  <property name="styleSheet">
@@ -1633,7 +1766,7 @@ color: rgb(25, 25, 25);</string>
                 </widget>
                </item>
                <item>
-                <widget class="QPushButton" name="pushButton_20">
+                <widget class="QPushButton" name="pb_f3_joint2_neg">
                  <property name="maximumSize">
                   <size>
                    <width>100</width>
@@ -1642,7 +1775,7 @@ color: rgb(25, 25, 25);</string>
                  </property>
                  <property name="font">
                   <font>
-                   <pointsize>22</pointsize>
+                   <pointsize>18</pointsize>
                   </font>
                  </property>
                  <property name="styleSheet">
@@ -1662,6 +1795,12 @@ color: rgb(25, 25, 25);</string>
             </item>
             <item>
              <widget class="QFrame" name="frame_26">
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>90</height>
+               </size>
+              </property>
               <property name="styleSheet">
                <string notr="true">background-color: rgb(136, 136, 136);</string>
               </property>
@@ -1673,7 +1812,7 @@ color: rgb(25, 25, 25);</string>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_18">
                <item>
-                <widget class="QPushButton" name="pushButton_21">
+                <widget class="QPushButton" name="pb_f3_joint3_pos">
                  <property name="maximumSize">
                   <size>
                    <width>100</width>
@@ -1682,7 +1821,7 @@ color: rgb(25, 25, 25);</string>
                  </property>
                  <property name="font">
                   <font>
-                   <pointsize>22</pointsize>
+                   <pointsize>18</pointsize>
                   </font>
                  </property>
                  <property name="styleSheet">
@@ -1698,7 +1837,7 @@ color: rgb(25, 25, 25);</string>
                 </widget>
                </item>
                <item>
-                <widget class="QPushButton" name="pushButton_22">
+                <widget class="QPushButton" name="pb_f3_joint3_neg">
                  <property name="maximumSize">
                   <size>
                    <width>100</width>
@@ -1707,7 +1846,224 @@ color: rgb(25, 25, 25);</string>
                  </property>
                  <property name="font">
                   <font>
-                   <pointsize>22</pointsize>
+                   <pointsize>18</pointsize>
+                  </font>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">border: 2px solid ;
+border-color: rgb(197, 197, 197);
+border-radius: 5px;
+background-color: rgba(52, 131, 74, 1);
+color: rgb(25, 25, 25);</string>
+                 </property>
+                 <property name="text">
+                  <string>-</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <widget class="QFrame" name="frame_42">
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>100</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(195, 195, 195);</string>
+           </property>
+           <property name="frameShape">
+            <enum>QFrame::StyledPanel</enum>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Raised</enum>
+           </property>
+           <layout class="QHBoxLayout" name="horizontalLayout_23">
+            <item>
+             <widget class="QFrame" name="frame_44">
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(136, 136, 136);</string>
+              </property>
+              <property name="frameShape">
+               <enum>QFrame::StyledPanel</enum>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Raised</enum>
+              </property>
+              <layout class="QVBoxLayout" name="verticalLayout_21">
+               <item>
+                <widget class="QPushButton" name="pb_f4_joint1_pos">
+                 <property name="maximumSize">
+                  <size>
+                   <width>100</width>
+                   <height>40</height>
+                  </size>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <pointsize>18</pointsize>
+                  </font>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">border: 2px solid ;
+border-color: rgb(197, 197, 197);
+border-radius: 5px;
+background-color: rgba(52, 131, 74, 1);
+color: rgb(25, 25, 25);</string>
+                 </property>
+                 <property name="text">
+                  <string>+</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="pb_f4_joint1_neg">
+                 <property name="maximumSize">
+                  <size>
+                   <width>100</width>
+                   <height>40</height>
+                  </size>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <pointsize>18</pointsize>
+                  </font>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">border: 2px solid ;
+border-color: rgb(197, 197, 197);
+border-radius: 5px;
+background-color: rgba(52, 131, 74, 1);
+color: rgb(25, 25, 25);</string>
+                 </property>
+                 <property name="text">
+                  <string>-</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
+             <widget class="QFrame" name="frame_43">
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(136, 136, 136);</string>
+              </property>
+              <property name="frameShape">
+               <enum>QFrame::StyledPanel</enum>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Raised</enum>
+              </property>
+              <layout class="QVBoxLayout" name="verticalLayout_22">
+               <item>
+                <widget class="QPushButton" name="pb_f4_joint2_pos">
+                 <property name="maximumSize">
+                  <size>
+                   <width>100</width>
+                   <height>40</height>
+                  </size>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <pointsize>18</pointsize>
+                  </font>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">border: 2px solid ;
+border-color: rgb(197, 197, 197);
+border-radius: 5px;
+background-color: rgba(52, 131, 74, 1);
+color: rgb(25, 25, 25);</string>
+                 </property>
+                 <property name="text">
+                  <string>+</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="pb_f4_joint2_neg">
+                 <property name="maximumSize">
+                  <size>
+                   <width>100</width>
+                   <height>40</height>
+                  </size>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <pointsize>18</pointsize>
+                  </font>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">border: 2px solid ;
+border-color: rgb(197, 197, 197);
+border-radius: 5px;
+background-color: rgba(52, 131, 74, 1);
+color: rgb(25, 25, 25);</string>
+                 </property>
+                 <property name="text">
+                  <string>-</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
+             <widget class="QFrame" name="frame_45">
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(136, 136, 136);
+</string>
+              </property>
+              <property name="frameShape">
+               <enum>QFrame::StyledPanel</enum>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Raised</enum>
+              </property>
+              <layout class="QVBoxLayout" name="verticalLayout_23">
+               <item>
+                <widget class="QPushButton" name="pb_f4_joint3_pos">
+                 <property name="maximumSize">
+                  <size>
+                   <width>100</width>
+                   <height>40</height>
+                  </size>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <pointsize>18</pointsize>
+                  </font>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">border: 2px solid ;
+border-color: rgb(197, 197, 197);
+border-radius: 5px;
+background-color: rgba(52, 131, 74, 1);
+color: rgb(25, 25, 25);</string>
+                 </property>
+                 <property name="text">
+                  <string>+</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="pb_f4_joint3_neg">
+                 <property name="maximumSize">
+                  <size>
+                   <width>100</width>
+                   <height>40</height>
+                  </size>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <pointsize>18</pointsize>
                   </font>
                  </property>
                  <property name="styleSheet">
@@ -1765,7 +2121,7 @@ color: rgb(25, 25, 25);</string>
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="pb_saveasJog">
+             <widget class="QPushButton" name="pb_origin">
               <property name="maximumSize">
                <size>
                 <width>16777215</width>
@@ -1778,7 +2134,7 @@ color: rgb(25, 25, 25);</string>
                </font>
               </property>
               <property name="text">
-               <string>Save As</string>
+               <string>Origin</string>
               </property>
              </widget>
             </item>
@@ -1806,7 +2162,7 @@ color: rgb(25, 25, 25);</string>
          <item>
           <widget class="QFrame" name="frame_31">
            <property name="styleSheet">
-            <string notr="true">background-color: rgb(136, 136, 136);</string>
+            <string notr="true">background-color: rgb(217, 217, 217);</string>
            </property>
            <property name="frameShape">
             <enum>QFrame::StyledPanel</enum>
@@ -1814,6 +2170,242 @@ color: rgb(25, 25, 25);</string>
            <property name="frameShadow">
             <enum>QFrame::Raised</enum>
            </property>
+           <layout class="QVBoxLayout" name="verticalLayout_20">
+            <item>
+             <widget class="QFrame" name="frame_41">
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>50</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(172, 172, 172);</string>
+              </property>
+              <property name="frameShape">
+               <enum>QFrame::StyledPanel</enum>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Raised</enum>
+              </property>
+              <layout class="QHBoxLayout" name="horizontalLayout_22">
+               <item>
+                <widget class="QLabel" name="label_15">
+                 <property name="font">
+                  <font>
+                   <pointsize>12</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>Pos:-500~100</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="Line" name="line_6">
+                 <property name="styleSheet">
+                  <string notr="true">background-color: rgb(255, 255, 255);</string>
+                 </property>
+                 <property name="lineWidth">
+                  <number>2</number>
+                 </property>
+                 <property name="orientation">
+                  <enum>Qt::Vertical</enum>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="label_17">
+                 <property name="font">
+                  <font>
+                   <pointsize>12</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>Speed:10~100</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="label_18">
+                 <property name="text">
+                  <string/>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
+             <widget class="QFrame" name="frame_39">
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>59</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(172, 172, 172);</string>
+              </property>
+              <property name="frameShape">
+               <enum>QFrame::StyledPanel</enum>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Raised</enum>
+              </property>
+              <layout class="QHBoxLayout" name="horizontalLayout_20">
+               <item>
+                <widget class="QLineEdit" name="le_finger_pos">
+                 <property name="maximumSize">
+                  <size>
+                   <width>16777215</width>
+                   <height>40</height>
+                  </size>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <pointsize>12</pointsize>
+                  </font>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">background-color: rgb(255, 255, 255);</string>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="le_finger_speed">
+                 <property name="maximumSize">
+                  <size>
+                   <width>16777215</width>
+                   <height>40</height>
+                  </size>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <pointsize>12</pointsize>
+                  </font>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">background-color: rgb(255, 255, 255);</string>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="pb_all_finger">
+                 <property name="maximumSize">
+                  <size>
+                   <width>16777215</width>
+                   <height>40</height>
+                  </size>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <pointsize>12</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>All Finger</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
+             <widget class="QFrame" name="frame_40">
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(172, 172, 172);</string>
+              </property>
+              <property name="frameShape">
+               <enum>QFrame::StyledPanel</enum>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Raised</enum>
+              </property>
+              <layout class="QHBoxLayout" name="horizontalLayout_21">
+               <item>
+                <widget class="QLineEdit" name="le_grip_pos">
+                 <property name="maximumSize">
+                  <size>
+                   <width>16777215</width>
+                   <height>40</height>
+                  </size>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <pointsize>12</pointsize>
+                  </font>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">background-color: rgb(255, 255, 255);</string>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="le_grip_speed">
+                 <property name="maximumSize">
+                  <size>
+                   <width>16777215</width>
+                   <height>40</height>
+                  </size>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <pointsize>12</pointsize>
+                  </font>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">background-color: rgb(255, 255, 255);</string>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="pb_all_grip">
+                 <property name="maximumSize">
+                  <size>
+                   <width>16777215</width>
+                   <height>40</height>
+                  </size>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <pointsize>12</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>All Grip</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
+             <widget class="QFrame" name="frame_46">
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(172, 172, 172);</string>
+              </property>
+              <property name="frameShape">
+               <enum>QFrame::StyledPanel</enum>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Raised</enum>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </widget>
          </item>
         </layout>

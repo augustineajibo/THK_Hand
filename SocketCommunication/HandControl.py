@@ -143,6 +143,14 @@ class THK_Hand():
         result = self.move(pos,speed,finger_id)
         return result
 
+    def Specific_Finger(self,pos,speed):
+        #finger_id =[1,3,5,7]
+        finger_id =[1]
+        result = self.move(pos,speed,finger_id)
+        return result
+
+
+
 
 
     def move(self, pos, speed, id):
