@@ -37,7 +37,7 @@ class THK_Hand():
         # print(result)
         bytes_data= list(result)
         # bytes_data = [chr(r) for r in receive]
-        print(bytes_data)
+        #print(bytes_data)
 
         if bytes_data[2] == 2:
             return False
@@ -93,7 +93,7 @@ class THK_Hand():
             print("Encoder count")
             sub_data_len = sub_data[1]
             data = sub_data[2:]
-            print(data)
+            #print(data)
 
             for i in range(0,sub_data_len, 2):
                 txt = (data[i + 1] << 8) & 0x0000FF00 | (data[i] & 0x000000FF)
@@ -113,10 +113,10 @@ class THK_Hand():
 
 
         elif sub_data[0] == 7: # Sensor Value
-            print("Sensor Value")
+            #print("Sensor Value")
             sub_data_len = sub_data[1]
             data = sub_data[2:]
-            print(data)
+            #print(data)
             for i in range(0,sub_data_len, 2):
                 txt = (data[i+1] << 8) & 0x0000FF00 | (data[i] & 0x000000FF)
                 str_data.append(txt)
@@ -125,7 +125,7 @@ class THK_Hand():
 
 
 
-    def MoveAllGrip(self,pos,speed):
+    def MoveAllGrip (self,pos,speed):
         finger_id = [2, 4, 6, 8]
 
         if isinstance(pos, list):

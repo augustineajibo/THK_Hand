@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>1613</width>
-    <height>860</height>
+    <height>856</height>
    </rect>
   </property>
   <property name="font">
@@ -416,6 +416,13 @@ background-color: rgb(255, 0, 0);</string>
           </widget>
          </item>
          <item>
+          <widget class="QWidget" name="widget_SensorData" native="true">
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(136, 136, 136);</string>
+           </property>
+          </widget>
+         </item>
+         <item>
           <widget class="QFrame" name="frame_14">
            <property name="maximumSize">
             <size>
@@ -534,19 +541,6 @@ background-color: rgb(255, 0, 0);</string>
              </widget>
             </item>
            </layout>
-          </widget>
-         </item>
-         <item>
-          <widget class="QFrame" name="frame_13">
-           <property name="styleSheet">
-            <string notr="true">background-color: rgb(136, 136, 136);</string>
-           </property>
-           <property name="frameShape">
-            <enum>QFrame::StyledPanel</enum>
-           </property>
-           <property name="frameShadow">
-            <enum>QFrame::Raised</enum>
-           </property>
           </widget>
          </item>
         </layout>

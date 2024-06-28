@@ -24,7 +24,7 @@ class Ui_MainForm(object):
         if not MainForm.objectName():
             MainForm.setObjectName(u"MainForm")
         MainForm.setWindowModality(Qt.WindowModal)
-        MainForm.resize(1613, 860)
+        MainForm.resize(1613, 856)
         font = QFont()
         font.setPointSize(12)
         MainForm.setFont(font)
@@ -223,6 +223,12 @@ class Ui_MainForm(object):
 
         self.verticalLayout_4.addWidget(self.label_9)
 
+        self.widget_SensorData = QWidget(self.frame_4)
+        self.widget_SensorData.setObjectName(u"widget_SensorData")
+        self.widget_SensorData.setStyleSheet(u"background-color: rgb(136, 136, 136);")
+
+        self.verticalLayout_4.addWidget(self.widget_SensorData)
+
         self.frame_14 = QFrame(self.frame_4)
         self.frame_14.setObjectName(u"frame_14")
         self.frame_14.setMaximumSize(QSize(16777215, 120))
@@ -285,14 +291,6 @@ class Ui_MainForm(object):
 
 
         self.verticalLayout_4.addWidget(self.frame_14)
-
-        self.frame_13 = QFrame(self.frame_4)
-        self.frame_13.setObjectName(u"frame_13")
-        self.frame_13.setStyleSheet(u"background-color: rgb(136, 136, 136);")
-        self.frame_13.setFrameShape(QFrame.StyledPanel)
-        self.frame_13.setFrameShadow(QFrame.Raised)
-
-        self.verticalLayout_4.addWidget(self.frame_13)
 
 
         self.horizontalLayout_2.addWidget(self.frame_4)

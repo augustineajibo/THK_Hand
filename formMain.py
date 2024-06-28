@@ -2,11 +2,11 @@ import sys
 import time
 import pyrealsense2 as rs
 import numpy as np
-import cv2
 import time
 import math
 import os
 import csv
+import ast
 from PySide6 import QtCore as qtc
 from PySide6 import QtWidgets as qtw
 from PySide6 import QtGui as qtg
@@ -20,13 +20,9 @@ from PySide6.QtWidgets import *
 from PySide6.QtGui import QPixmap
 from PySide6.QtUiTools import QUiLoader
 
-
 from PySide6.QtWidgets import QWidget, QLabel, QApplication
 from PySide6.QtCore import QThread, Qt, Signal, Slot
 from PySide6.QtGui import QImage, QPixmap
-pyqtSignal = Signal
-pyqtSlot = Slot
-
 
 from SocketCommunication import socketCom
 
@@ -34,11 +30,58 @@ import cv2
 from PIL import Image
 from ultralytics import YOLO
 
-class MainForm(qtw.QWidget, Ui_MainForm):
+from PySide6.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget, QLabel, QFormLayout
+from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
+import sys
+import random
+from datetime import datetime, timedelta
+import matplotlib.pyplot as plt
+from matplotlib.dates import DateFormatter
 
+
+pyqtSignal = Signal
+pyqtSlot = Slot
+
+
+class PlotWidget(QWidget):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+
+        self.figure, self.ax = plt.subplots()
+        self.canvas = FigureCanvas(self.figure)
+
+        layout = QVBoxLayout()
+        layout.addWidget(self.canvas)
+        self.setLayout(layout)
+
+        self.plot_sensor_data()
+
+    def plot_sensor_data(self):
+        # Generate some example time series data
+        now = datetime.now()
+        x = [now - timedelta(minutes=i) for i in range(100)]
+        y = [random.random() for _ in range(100)]
+
+        # Create a plot
+        self.ax.clear()
+        self.ax.plot(x, y, 'r-')
+        self.ax.set_title("Sensor Data Over Time")
+        self.ax.set_xlabel("Time")
+        self.ax.set_ylabel("Sensor Value")
+        self.ax.xaxis.set_major_formatter(DateFormatter("%H:%M"))
+
+        # Rotate date labels for better readability
+        self.figure.autofmt_xdate()
+
+        # Refresh the canvas
+        self.canvas.draw()
+
+
+class MainForm(qtw.QWidget, Ui_MainForm):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
+
         self.Finger_1_current_status = [0, 0, 0]
         self.Finger_2_current_status = [0, 0, 0]
         self.Finger_3_current_status = [0, 0, 0]
@@ -49,14 +92,13 @@ class MainForm(qtw.QWidget, Ui_MainForm):
 
 
 
-
         self.seg_image = "./runs/segment/predict/rgb_image.jpg"
         self.captured_image = './Images_new/rgb_image.jpg'
         #delete_files_and_folders(directory)
 
         self.item = "Pet-bottle"
 
-        self.running=True
+        self.running = True
 
         self.pb_connect.clicked.connect(self.Connect_2_Hand)
         self.pb_reset.clicked.connect(self.reset_handPos)
@@ -67,6 +109,8 @@ class MainForm(qtw.QWidget, Ui_MainForm):
         self.pb_save.clicked.connect(self.itemDetection)
         self.pb_detect.clicked.connect(self.detectionCheck)
         self.pb_saveJog.clicked.connect(self.save_to_csv)
+        self.pb_load.clicked.connect(self.load_Move_AllFinger)
+        self.pb_add.clicked.connect(self.plot_sensor_data)
 
         self.pb_f1_joint1_pos.clicked.connect(self.Finger_1_joint_1_Pos)
         self.pb_f1_joint1_neg.clicked.connect(self.Finger_1_joint_1_Neg)
@@ -95,6 +139,31 @@ class MainForm(qtw.QWidget, Ui_MainForm):
         self.pb_f4_joint2_neg.clicked.connect(self.Finger_4_joint_2_Neg)
         self.pb_f4_joint3_pos.clicked.connect(self.Finger_4_joint_3_Pos)
         self.pb_f4_joint3_neg.clicked.connect(self.Finger_4_joint_3_Neg)
+
+    def sensor_data(self):
+        sense_data = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        sensor_value = [0x80, 0x00, 0x00, 0x00]
+
+        host, port = self.Connect_2_Hand()
+        hand = socketCom.THK_Hand_Controller()
+        status = hand.connect(host, port)
+        #mean, xax, j = [], [], 0
+        #new_result=[]
+
+        while True:
+            result = hand.get_data(sensor_value)
+
+
+
+
+    def plot_sensor_data(self):
+        # Generate some example time series data
+        now = datetime.now()
+        result= self.sensor_data()
+
+        print(result)
+
+
 
     def delete_files_and_folders(self, detection_dir):
         print(detection_dir)
@@ -185,12 +254,15 @@ class MainForm(qtw.QWidget, Ui_MainForm):
     def Connect_2_Hand(self):
         host = self.le_ip.text()
         port = int(self.le_port.text())
+
+
         if host == "192.168.30.200" and port == 1024:
             print("correct IP and Port entered")
         else:
             print("Invalid ip or port entered")
         hand = socketCom.THK_Hand_Controller()
         status=hand.connect(host, port)
+
 
         if status[0] == 1:
             print("connected successfully")
@@ -199,6 +271,8 @@ class MainForm(qtw.QWidget, Ui_MainForm):
 
         hand.close()
         return(host, port)
+
+
 
 
 
@@ -232,6 +306,7 @@ class MainForm(qtw.QWidget, Ui_MainForm):
             print("Check hand connection")
         return
 
+
     def AllFinger(self):
         host, port = self.Connect_2_Hand()
         pos = int(self.le_finger_pos.text())
@@ -245,6 +320,21 @@ class MainForm(qtw.QWidget, Ui_MainForm):
         else:
             print("Check hand connection")
         return
+
+    def load_Move_AllFinger(self):
+        host, port = self.Connect_2_Hand()
+        pos = self.load_csv()
+        speed = 5
+        hand = socketCom.THK_Hand_Controller()
+        status = hand.connect(host, port)
+
+        if status[0] == 1:
+            hand.MoveAllFingers(pos,speed)
+            hand.close()
+        else:
+            print("Check hand connection")
+        return
+
 
     def Finger_1_Joint_1(self):
         host, port = self.Connect_2_Hand()
@@ -826,18 +916,70 @@ class MainForm(qtw.QWidget, Ui_MainForm):
             # Save data to the CSV file
             try:
                 np.savetxt(file_name, [merged_list], delimiter=',', fmt='%d')
-                """
-                with open(file_name, mode='w', newline='') as file:
-                    writer = csv.writer(file)
-                    for item in merged_list:
-                        writer.writerow([item])  # Write each item as a single-element row
-                """
                 print(f"Data successfully saved to {file_name}")
 
             except Exception as e:
                 print(f"Error saving data to CSV: {e}")
 
+    def load_csv(self):
+        # Open a file dialog to select a CSV file
+        file_dialog = QFileDialog(self)
+        file_dialog.setNameFilter("CSV files (*.csv)")
+        if file_dialog.exec():
+            # Get the selected file path
+            file_path = file_dialog.selectedFiles()[0]
 
+            # Read and display the CSV contents
+            try:
+                # Load the CSV file into a numpy array
+                data = np.loadtxt(file_path, delimiter=',', dtype=int)
+                # Convert the numpy array to a list
+                data_list = data.tolist()
+
+
+                # Convert the nested list (since we used [merged_list] in savetxt) to a flat list
+                if len(data_list) == 1:
+                    data_list = data_list[0]
+
+            except (ValueError, SyntaxError):
+
+                pass
+        return data_list
+
+
+
+    """
+    def load_csv(self):
+        # Open a file dialog to select a CSV file
+        file_dialog = QFileDialog(self)
+        file_dialog.setNameFilter("CSV files (*.csv)")
+        if file_dialog.exec():
+            # Get the selected file path
+            file_path = file_dialog.selectedFiles()[0]
+
+            # Read and display the CSV contents
+            with open(file_path, newline='') as csvfile:
+                reader = csv.reader(csvfile)
+                content = ""
+
+                for row in reader:
+                    # Convert the specific column (assuming the first column here) from string to list of floats
+                    # Adjust the column index as needed
+                    try:
+                        # Evaluate the string to get a list
+                        list_as_str = ast.literal_eval(row[0])
+                        # Convert each element of the list to float
+                        if isinstance(list_as_str, list):
+                            list_as_floats = [float(x) for x in list_as_str]
+                            row[0] = list_as_floats
+                    except (ValueError, SyntaxError):
+                        pass
+                    content += str(row) + "\n"
+                print(content)
+
+        return content
+
+    """
 
 
 
